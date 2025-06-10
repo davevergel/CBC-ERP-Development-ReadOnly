@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditUserRolesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <StackPanel>
+            <Border Background="#2c3e50" Padding="20" >
+                <TextBlock Text="Roles Management" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" />
+            </Border>
+            <TextBlock Text="Role Name" Padding="10" />
+            <TextBox Text="{Binding Role.RoleName}" />
+
+            <TextBlock Text="Permission Level" Margin="0,10,0,0" Padding="10"/>
+            <TextBox Text="{Binding Role.PermissionLevel}" />
+
+            <TextBlock Text="Description" Margin="0,10,0,0" Padding="10"/>
+            <TextBox Text="{Binding Role.Description}" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" />
+            
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" Margin="0,0,10,0"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

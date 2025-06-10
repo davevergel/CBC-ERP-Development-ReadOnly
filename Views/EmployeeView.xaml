@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.EmployeeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             xmlns:helpers="clr-namespace:CbcRoastersErp.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <helpers:DateMatchConverter x:Key="DateMatchConverter"/>
+    </UserControl.Resources>
+
+    <Grid Background="#f8f9fa">
+        <DockPanel LastChildFill="True">
+
+            <!-- Header -->
+            <Border Background="#FF1163B5" Padding="20" DockPanel.Dock="Top">
+                <TextBlock Text="Employee Management" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" />
+            </Border>
+
+            <!-- Main Content -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Top">
+                    <Button Content="Back to Dashboard"
+                            Command="{Binding NavigateBackCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+                    <TabControl Margin="10">
+                        <!-- Tabs are assumed to already be structured correctly within existing XAML content -->
+                        <!-- Employees Tab -->
+                        <TabItem Header="Employees">
+                            <DockPanel>
+                                <DataGrid ItemsSource="{Binding Employees}"
+                              SelectedItem="{Binding SelectedEmployee}"
+                              AutoGenerateColumns="False"
+                              Margin="10">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                                        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+                                    <Button Content="Add/Edit Employee"
+                                    Command="{Binding OpenAddEditEmployeeCommand}"
+                                    Margin="0,0,20,0"
+                                    Height="30"
+                                    HorizontalAlignment="Right" />
+                                    <Button Content="Delete Selected"
+                                        Command="{Binding DeleteEmployeeCommand}"
+                                        Margin="0,0,10,0"
+                                        Height="30"
+                                        HorizontalAlignment="Right" />
+                                </StackPanel>
+                            </DockPanel>
+                        </TabItem>
+
+                        <!-- Work Schedules Tab -->
+                        <TabItem Header="Work Schedules">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+                                    <Button Content="Add/Edit Schedule"
+                                            Command="{Binding OpenAddEditScheduleCommand}"
+                                            Margin="0,0,20,0"
+                                            HorizontalAlignment="Right"/>
+                                    <Button Content="Delete Selected"
+                                            Command="{Binding DeleteScheduleCommand}"
+                                            Margin="0,0,10,0"
+                                            HorizontalAlignment="Right" />
+                                </StackPanel>
+
+                                <DataGrid ItemsSource="{Binding Schedules}"
+                              SelectedItem="{Binding SelectedSchedule}"
+                              AutoGenerateColumns="False"
+                              Margin="10">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Employee Name" Binding="{Binding EmployeeFullName}" />
+                                        <DataGridTextColumn Header="Task" Binding="{Binding TaskDescription}" />
+                                        <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" />
+                                        <DataGridTextColumn Header="Break" Binding="{Binding Break}" />
+                                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                                        <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate}" />
+                                        <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime}" />
+                                        <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}" />
+                                        <DataGridTextColumn Header="End Time" Binding="{Binding EndTime}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DockPanel>
+                        </TabItem>
+
+                        <!-- Monthly Calendar Tab -->
+                        <TabItem Header="Calendar View">
+                            <DockPanel>
+                                <!-- Navigation Buttons -->
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
+                                    <Button Content="Previous Month"
+                                            Command="{Binding PreviousMonthCommand}"
+                                            Margin="10,0" />
+                                    <Button Content="Next Month"
+                                            Command="{Binding NextMonthCommand}" />
+                                </StackPanel>
+
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding CalendarDays}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="7" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Gray" BorderThickness="1" Padding="5" Margin="2">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Date, StringFormat='{}{0:MMM dd}'}" FontWeight="Bold" />
+                                                        <ItemsControl ItemsSource="{Binding Schedules}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Content="{Binding EmployeeFullName}"
+                                                    Command="{Binding DataContext.OpenAddEditScheduleCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    Margin="2,0" />
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </TabItem>
+
+                    </TabControl>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</UserControl>

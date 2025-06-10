@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.ProductionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <vm:ProductionViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="#f8f9fa">
+        <DockPanel LastChildFill="True">
+            <!-- Header -->
+            <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
+                <TextBlock Text="Production Management" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" />
+            </Border>
+
+            <!-- Pagination Controls -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" 
+                Margin="10" DockPanel.Dock="Bottom">
+                <Button Content="Previous" Command="{Binding PageChangedCommand}" 
+                        CommandParameter="Previous"
+                        IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}"
+                        Margin="0,0,5,0" />
+                <Button Content="Next"
+                        Command="{Binding PageChangedCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}">
+                            <Binding Path="CurrentPage"/>
+                            <Binding Path="TotalPages"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </StackPanel>
+
+            <!-- Scrollable Content -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
+                <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Top">
+                    <Button Content="Back to Dashboard"
+                            Command="{Binding NavigateBackCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+                    <TabControl>
+                        <TabItem Header="Batch Roasting">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Content="Add/Edit Batch"
+                                        Command="{Binding OpenAddEditBatchCommand}"
+                                         Margin="0,0,125,0"
+                                        HorizontalAlignment="Right"
+                                        Width="150"/>
+                                <Button Content="Delete Batch" 
+                                        Command="{Binding DeleteBatchCommand}"
+                                        HorizontalAlignment="Right"
+                                        Width="100" Margin="0,0,10,0" />
+                                <DataGrid ItemsSource="{Binding RoastBatches}"
+                                          SelectedItem="{Binding SelectedBatch}"
+                                          AutoGenerateColumns="False"
+                                          Grid.Row="1"
+                                          IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Batch #" Binding="{Binding BatchNumber}" />
+                                        <DataGridTextColumn Header="Roast Date" Binding="{Binding RoastDate}" />
+                                        <DataGridTextColumn Header="Batch Size" Binding="{Binding BatchSize}" />
+                                        <DataGridTextColumn Header="Finished Good" Binding="{Binding FinishedGoodName}" />
+                                        <DataGridTextColumn Header="Roast Profile" Binding="{Binding ProfileName}" />
+                                        <DataGridTextColumn Header="Roast Level" Binding="{Binding RoastLevel}" />
+                                        <DataGridTextColumn Header="Production Date" Binding="{Binding ProductionDate}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+                        <!-- Future Tabs-->
+                    </TabControl>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.BigCommerceOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                       
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             x:Name="OrdersView">
+    <UserControl.DataContext>
+        <vm:BigCommerceOrdersViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="#f8f9fa">
+        <DockPanel LastChildFill="True">
+
+            <!-- Header -->
+            <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
+                <TextBlock Text="BigCommerce Orders" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" />
+            </Border>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10" Orientation="Vertical" >
+
+                    <!-- Search Section -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,10" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox Width="200" Text="{Binding SearchCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 materialDesign:HintAssist.Hint="Search Customer..." />
+                        <TextBox Width="200" Text="{Binding SearchStatus, UpdateSourceTrigger=PropertyChanged}" 
+                                 materialDesign:HintAssist.Hint="Search Status..." />
+                        <DatePicker Width="150" SelectedDate="{Binding SearchStartDate}" Padding="10"
+                                    materialDesign:HintAssist.Hint="Start Date" />
+                        <DatePicker Width="150" SelectedDate="{Binding SearchEndDate}" Padding="10"
+                                    materialDesign:HintAssist.Hint="End Date" />
+                        <Button Content="Search" Width="100" Command="{Binding SearchCommand}" />
+                        <Button Content="Back" Width="100" Command="{Binding NavigateBackCommand}" Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <!-- Data Grid -->
+                    <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False"
+                              CanUserAddRows="False" CanUserDeleteRows="False"
+                              CanUserSortColumns="True" CanUserReorderColumns="True"
+                              IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Order #" Binding="{Binding BigCommerceID}" Width="Auto" />
+                            <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="Auto" />
+                            <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate, StringFormat=d}" Width="Auto" />
+                            <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, StringFormat=C}" Width="Auto" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Pagination -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" >
+                        <Button Content="Previous" Command="{Binding PreviousPageCommand}"
+                                IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}" />
+                        <TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center" Padding="10" FontWeight="SemiBold"/>
+                        <TextBlock Text="of" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding TotalPages}" VerticalAlignment="Center" FontWeight="SemiBold" Padding="10"/>
+                        <Button Content="Next"
+                        Command="{Binding NextPageCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}">
+                                    <Binding Path="CurrentPage"/>
+                                    <Binding Path="TotalPages"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </DockPanel>
+    </Grid>
+
+</UserControl>
+

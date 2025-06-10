@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.Finance.ImportDriposSalesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CbcRoastersErp.Views.Finance"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Loading Spinner -->
+        <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressBar IsIndeterminate="True" 
+                             Height="8" 
+                             Width="200" 
+                             Foreground="{DynamicResource PrimaryHueMidBrush}" 
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Center" />
+        </Grid>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="10" Background="#003366" CornerRadius="5" Margin="0 0 0 10">
+            <TextBlock Text="Dripos Daily Sales Import"
+                       FontWeight="Bold" FontSize="20"
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Filter -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 10">
+            <TextBox Width="200" Height="25" Margin="5"
+                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Filter by Date or Amount..." />
+            <Button Content="Apply Filter"
+                    Command="{Binding ApplyFilterCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+        </StackPanel>
+
+        <!-- Data Grid -->
+        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+            <DataGrid ItemsSource="{Binding FilteredEntries}"
+                      SelectedItem="{Binding SelectedEntry}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      Margin="5"
+                      HeadersVisibility="Column"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*" SortMemberPath="Date"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*" SortMemberPath="Amount"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 15 0 0">
+            <Button Content="🗑 Remove Selected"
+                    Command="{Binding DeleteSelectedCommand}"
+                    IsEnabled="{Binding SelectedEntry, Converter={StaticResource NullToBoolConverter}}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+            <Button Content="↩ Undo"
+                    Command="{Binding UndoDeleteCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+            <Button Content="📂 Load CSV"
+                    Command="{Binding LoadPreviewCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+            <Button Content="✅ Import Sales"
+                    Command="{Binding ConfirmImportCommand}"
+                    Background="#4CAF50" Foreground="White"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+            <Button Content="Back"
+                    Command="{Binding NavigateBackCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+        </StackPanel>
+    </Grid>
+
+</UserControl>

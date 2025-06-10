@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.Finance.JournalEntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views.Finance"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Load" Command="{Binding LoadCommand}" Margin="5"/>
+            <Button Content="Add/Edit Entry" Command="{Binding AddEditJournalCommand}" Margin="5"/>
+            <Button Content="Delete Entry" Command="{Binding DeleteCommand}" Margin="5"/>
+            <Button Content="Back" Command="{Binding NavigateBackCommand}" Margin="5"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding JournalEntries}" 
+                  SelectedItem="{Binding SelectedEntry}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding EntryDate}" Width="150"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditBatchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views" xmlns:viewmodels="clr-namespace:CbcRoastersErp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddEditBatchViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <TextBlock Text="Batch Roasting Details" FontSize="18" FontWeight="Bold"
+                   HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
+        <StackPanel Margin="20">
+            <TextBlock Text="Roast Date"/>
+            <DatePicker SelectedDate="{Binding Batch.RoastDate}" Width="300"/>
+
+            <TextBlock Text="Finished Good"/>
+            <ComboBox ItemsSource="{Binding FinishedGoodsList}" 
+              SelectedItem="{Binding SelectedFinishedGood}" 
+              DisplayMemberPath="ProductName" Width="300"/>
+
+            <TextBlock Text="Batch Size"/>
+            <TextBox Text="{Binding Batch.BatchSize}" Width="300"/>
+
+            <TextBlock Text="Roasting Profile"/>
+            <ComboBox ItemsSource="{Binding RoastingProfilesList}" 
+                  SelectedItem="{Binding SelectedRoastingProfile}" 
+                  DisplayMemberPath="ProfileName" Width="300"/>
+
+            <TextBlock Text="Roast Level" />
+            <TextBox Text="{Binding Batch.RoastLevel}" Width="300"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="5"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

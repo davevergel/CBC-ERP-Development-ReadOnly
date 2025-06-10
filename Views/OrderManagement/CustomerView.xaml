@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.CustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid Background="#f8f9fa">
+        <DockPanel>
+            <!-- Header -->
+            <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
+                <TextBlock Text="Customer Management" Foreground="White" FontSize="22" FontWeight="SemiBold" />
+            </Border>
+
+            <!-- Controls -->
+            <StackPanel Orientation="Horizontal" Margin="10" DockPanel.Dock="Top" HorizontalAlignment="Right">
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"
+                     materialDesign:HintAssist.Hint="Search Customer" VerticalAlignment="Center"/>
+                <Button Content="Back to Dashboard" 
+                        Margin="0,0,10,0" Width="200"
+                        Command="{Binding NavigateBackCommand}" 
+                        Style="{StaticResource MaterialDesignRaisedButton}" />
+            </StackPanel>
+
+            <!-- Table -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="False" Margin="10" CanUserSortColumns="True" CanUserReorderColumns="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                        <DataGridTextColumn Header="Company" Binding="{Binding Company}" />
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                        <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                        <DataGridTextColumn Header="Type" Binding="{Binding CustomerType}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</UserControl>

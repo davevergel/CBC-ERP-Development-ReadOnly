@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.Administration.MasterData.FinishedGoods.FinishedGoodsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views.Administration.MasterData.FinishedGoods"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <materialDesign:DialogHost Identifier="RootDialog">
+        <Grid Margin="20">
+            <Grid.Resources>
+                <!-- Highlight selected row -->
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Padding="20" Margin="10">
+                <StackPanel Margin="0,0,0,2">
+                    <!-- Title -->
+                    <TextBlock Text="Finished Goods"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                       Margin="0 0 0 20"/>
+
+                    <!-- Data Table -->
+                    <DataGrid ItemsSource="{Binding FinishedGoods}"
+                              SelectedItem="{Binding SelectedFinishedGoods, Mode=TwoWay}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              RowHeight="40"
+                              HeadersVisibility="Column"
+                              SelectionMode="Single"
+                              Style="{StaticResource MaterialDesignDataGrid}"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                              Height="400"
+                              Margin="0 0 0 20">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="*"/>
+                            <DataGridTextColumn Header="BigCommerce Prod ID" Binding="{Binding BigCommProdID}" Width="200"/>
+                            <DataGridTextColumn Header="Roasting Profile" Binding="{Binding RoastingProfile.ProfileName}" Width="200"/>
+                            <DataGridTextColumn Header="Stock Level" Binding="{Binding StockLevel}" Width="150"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Pagination -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="0,20,0,0" >
+                        <Button Content="Previous" Command="{Binding PageChangedCommand}"
+                            CommandParameter="Previous"
+                            IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}" />
+                        <TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center" Padding="10" FontWeight="SemiBold"/>
+                        <TextBlock Text="of" VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{Binding TotalPages}" VerticalAlignment="Center" FontWeight="SemiBold" Padding="10"/>
+                        <Button Content="Next"
+                                Command="{Binding PageChangedCommand}" CommandParameter="Next">
+                                        <Button.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}"
+>
+                                    <Binding Path="CurrentPage"/>
+                                    <Binding Path="TotalPages"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Add/Edit" Command="{Binding OpenAddEditFinishedGoodsCommand}" 
+                        Margin="10" Padding="20,6"/>
+                        <Button Content="Delete" Command="{Binding DeleteFinishedGoodCommand }" 
+                        Margin="10" Padding="20,6" Background="Red" Foreground="White"/>
+                        <Button Content="Back to Dashboard" Command="{Binding NavigateBackCommand}" 
+                        Margin="10" Padding="20,6"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+    </materialDesign:DialogHost>
+
+
+
+</UserControl>

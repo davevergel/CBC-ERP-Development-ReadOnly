@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.BigCommerceSyncView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
+             xmlns:models="clr-namespace:CbcRoastersErp.Models"
+             d:DesignHeight="450" Width="1346">
+    <UserControl.DataContext>
+        <vm:BigCommerceSyncViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <!-- Header -->
+        <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
+            <TextBlock Text="BigCommerce Orders" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" />
+        </Border>
+    <!-- Progress Indicator -->
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10" DockPanel.Dock="Top">
+        <TextBlock Text="{Binding StatusMessage}" Margin="0,0,10,0" VerticalAlignment="Center" />
+        <ProgressBar Width="200" Height="20" IsIndeterminate="True"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter }}" />
+    </StackPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
+            <Button Content="Back to Dashboard" Command="{Binding NavigateBackCommand}" Margin="5" />
+            <Button Content="Sync Customers" Command="{Binding SyncCustomersCommand}" Margin="5"/>
+            <Button Content="Sync Orders by Date"
+                    Command="{Binding SyncOrdersByDateCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
+                    Foreground="White" />
+            <ComboBox ItemsSource="{Binding OrderStatuses}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedOrderStatus}"
+                      Width="200"
+                      Margin="5"/>
+            <DatePicker Width="150" Margin="0,0,10,0" SelectedDate="{Binding StartDate}" />
+            <DatePicker Width="150" Margin="0,0,10,0" SelectedDate="{Binding EndDate}" />
+
+        </StackPanel>
+
+        <TabControl Margin="10">
+            <TabItem Header="Customers">
+                <DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="True" CanUserSortColumns="True" CanUserReorderColumns="True"/>
+            </TabItem>
+            <TabItem Header="Orders">
+                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="True" CanUserSortColumns="True" CanUserReorderColumns="True"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl> 

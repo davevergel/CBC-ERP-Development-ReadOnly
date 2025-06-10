@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.HR.AddEditHrEmployeeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CbcRoastersErp.Views.HR"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels.HR"
+             Background="{DynamicResource MaterialDesignPaper}"
+             mc:Ignorable="d"
+             Height="Auto" Width="550">
+
+    <Grid Margin="20">
+        <StackPanel>
+            <Border Background="#2c3e50" Padding="20" >
+                <TextBlock Text="Add/Edit Employee" Foreground="White"
+                           FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center" />
+            </Border>
+
+            <TextBox materialDesign:HintAssist.Hint="First Name"
+                     Text="{Binding Item.FirstName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Last Name"
+                     Text="{Binding Item.LastName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Email"
+                     Text="{Binding Item.Email, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Phone"
+                     Text="{Binding Item.Phone, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <DatePicker materialDesign:HintAssist.Hint="Hire Date"
+                        SelectedDate="{Binding Item.HireDate, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Job Title"
+                     Text="{Binding Item.JobTitle, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <TextBox materialDesign:HintAssist.Hint="Department"
+                     Text="{Binding Item.Department, UpdateSourceTrigger=PropertyChanged}" Margin="0,5"/>
+
+            <ComboBox materialDesign:HintAssist.Hint="Status"
+                      SelectedItem="{Binding Item.Status, UpdateSourceTrigger=PropertyChanged}" Margin="0,5">
+                <ComboBoxItem Content="Active"/>
+                <ComboBoxItem Content="Inactive"/>
+            </ComboBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" Margin="5"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+
+
+</UserControl>

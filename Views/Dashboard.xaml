@@ -1,0 +1,374 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.Dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:CbcRoastersErp.Views"            
+                xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="{DynamicResource MaterialDesignPaper}">
+
+    <ScrollViewer>
+        <StackPanel Margin="30">
+
+            <!-- Header -->
+            <TextBlock Text="Dashboard"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                       Margin="0 0 0 30"/>
+
+            <!-- Operations Group -->
+            <GroupBox Header="Operations" Margin="0 0 0 20">
+                <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
+
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToInventoryCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Warehouse" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Inventory" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>                                
+                            <TextBlock Text="Manage inventory items" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToProductionCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Factory" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Production" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Roasting and batches" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <!-- Batch Schedule-->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToBatchScheduleCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Calendar" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Batch Schedule" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage batch schedules" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+
+
+                    <materialDesign:Card Margin="10"
+                                         Visibility="{Binding CanManageEmployees, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToEmployeesCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountGroup" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Employees" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Employee profiles/roles" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToArtisanCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountTie" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Artisan" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage artisan profiles" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+
+                </WrapPanel>
+            </GroupBox>
+            
+            <!--  Order Management -->
+            <GroupBox Header="Order/Sales Management" Margin="0 0 0 20">
+                <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToSalesDashboardCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CashRegister" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Sales Dashboard" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage sales and invoices" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToBigCommerceOrdersCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Shopping" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Orders" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage customer orders" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <!-- Customer Managemnet-->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToCustomerCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Customers" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage customer profiles" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <!-- BigCommerce Sync-->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToBigCommerceCommand}">
+                            <StackPanel Height="28">
+                                <StackPanel Orientation="Horizontal" Height="29">
+                                    <materialDesign:PackIcon Kind="Web" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="BigCommerce" FontSize="18" FontWeight="Bold"/>                                    
+                                </StackPanel>
+                                <TextBlock Text="Manage and Synce Bigcommerce Orders" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToShippingCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Truck" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Shipping" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage shipping and tracking" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                </WrapPanel>
+            </GroupBox>
+            
+            <!-- HR Group-->
+            <GroupBox Header="HR Management" Margin="0 0 0 20">
+                <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToHREmployeeCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="People" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Manage Employees" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage Employees" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToHRInterviewCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountCheck" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Interviews" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage interviews" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToHRPerformanceReviewCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Star" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Performance Reviews" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage performance reviews" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToHRCandidateCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountPlus" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Candidates" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage candidates" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToHRJobCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileDocument" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Jobs" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage job postings" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                </WrapPanel>
+
+            </GroupBox>
+            
+            <!-- Finance Group -->
+            <GroupBox Header="Finance" Margin="0 0 0 20">
+                <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToFinanceDashboardCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CashRegister" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Finance Dashboard" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage finance and reports" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToProfitLossCommand }">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ChartLine" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Profit and Loss" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="View profit and loss statement" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToFinanceAccountsCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Bank" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Accounts" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage accounts" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToFinanceJournalCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileDocumentEdit" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Journal Entries" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage journal entries" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToImportSquareCsvCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileImport" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Import Square CSV" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Import Square banking CSV" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToImportDriposSalesCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileImport" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Import Dripos Sales" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Import Dripos sales CSV" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToDriposSalesDashboardCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountCash" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Sales Dashboard" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Import Dripos combined CSV" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                </WrapPanel>
+            </GroupBox>
+
+            <!-- Admin Group -->
+            <GroupBox Header="Administration" Margin="0 0 0 20" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
+                    <!-- Master Data -->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToMasterDataCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Database" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Master Data" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage master data entities" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToUserManagementCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountSettings" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="User Management" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Create and manage users" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <!-- Role Management -->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToManagePermissionsCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Security" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Role Permissions" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Manage role-based access" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+                    <!-- Application Logs-->
+                    <materialDesign:Card Margin="10">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToApplicationLogsCommand}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileDocument" Width="24" Margin="0 0 8 0"/>
+                                    <TextBlock Text="Application Logs" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="View application logs" Foreground="Gray"/>
+                            </StackPanel>
+                        </Button>
+                    </materialDesign:Card>
+
+                </WrapPanel>
+            </GroupBox>
+
+            <!-- System Group -->
+            <GroupBox Header="System">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button 
+                            Click="ThemeToggle_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="WeatherNight" Margin="0 4 6 0"/>
+                            <TextBlock Text="Theme"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Content="Exit"
+                            Command="{Binding ExitCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Margin="5"/>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

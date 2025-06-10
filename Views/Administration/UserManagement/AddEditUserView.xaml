@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Margin="20" Width="400">
+            <TextBlock Text="User Details" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
+            <TextBlock Text="Employee" />
+            <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="FullName" />
+            
+            <TextBlock Text="Username"/>
+            <TextBox Text="{Binding User.Username}" />
+
+            <TextBlock Text="Password"/>
+            <PasswordBox Name="passwordBox" PasswordChanged="PasswordBox_PasswordChanged" Margin="0,5,0,10"/>
+            <TextBlock Text="(Leave blank to keep existing password)" FontStyle="Italic" FontSize="10"/>
+
+            <TextBlock Text="Role"/>
+            <ComboBox ItemsSource="{Binding Roles}" SelectedValue="{Binding User.RoleId}" DisplayMemberPath="RoleName" SelectedValuePath="RoleID"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="10"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
