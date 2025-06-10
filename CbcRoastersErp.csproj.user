@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\Administration\MasterData\FinishedGoodsViews\AddEditMdFinishedGoodsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\FinishedGoodsViews\FinishedGoodsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\MasterDataDashDbView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\RoastingProfilesViews\AddEditRoastingProfileView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\RoastingProfilesViews\ManageRoastingProfilesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ConfirmDeleteDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\AccountView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\AddEditAccountView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\AddEditJournalEntryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\DriposDashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\FinanceDashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\ImportDriposCombinedView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\ImportDriposSalesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\ImportSquareCsvView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\JournalEntryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Finance\ProfitAndLossView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\AddEditCandidateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\AddEditHrEmployeeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\AddEditInterviewView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\AddEditJobPostingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\AddEditPerformanceReviewView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\CandidateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HR\HrEmployeeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Production\AddEditBatchScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Production\AddEditBatchView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AddEditEmployeeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Inventory\AddEditGreenCoffeeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Inventory\AddEditPackingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Production\AddEditScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Inventory\AddEditTeaView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\PremissionRoles\AddEditUserRolesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\UserManagement\AddEditUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\ApplicationLogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Production\BatchScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\RoastProfilesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrderManagement\BigCommerceOrdersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrderManagement\BigCommerceSyncView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrderManagement\CustomerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dashboard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\EmployeeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Inventory\InventoryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\MasterData\PremissionRoles\ManagePermissionsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Production\ProductionView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SalesDashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Administration\UserManagement\UserManagementView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\FinishedGoodsViews\AddEditMdFinishedGoodsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\FinishedGoodsViews\FinishedGoodsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\MasterDataDashDbView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\RoastingProfilesViews\AddEditRoastingProfileView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\RoastingProfilesViews\ManageRoastingProfilesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ConfirmDeleteDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\AccountView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\AddEditAccountView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\AddEditJournalEntryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\DriposDashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\FinanceDashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\ImportDriposCombinedView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\ImportDriposSalesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\ImportSquareCsvView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\JournalEntryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Finance\ProfitAndLossView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\AddEditCandidateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\AddEditHrEmployeeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\AddEditInterviewView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\AddEditJobPostingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\AddEditPerformanceReviewView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\CandidateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HR\HrEmployeeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Production\AddEditBatchScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Production\AddEditBatchView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddEditEmployeeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Inventory\AddEditGreenCoffeeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Inventory\AddEditPackingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Production\AddEditScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Inventory\AddEditTeaView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\PremissionRoles\AddEditUserRolesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\UserManagement\AddEditUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\ApplicationLogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Production\BatchScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\RoastProfilesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderManagement\BigCommerceOrdersView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderManagement\BigCommerceSyncView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderManagement\CustomerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dashboard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EmployeeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Inventory\InventoryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\MasterData\PremissionRoles\ManagePermissionsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Production\ProductionView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SalesDashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Administration\UserManagement\UserManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>
