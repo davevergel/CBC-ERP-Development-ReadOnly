@@ -11,6 +11,7 @@ namespace CbcRoastersErp.ViewModels
         public bool CanManageEmployees => CurrentUserSession.HasPermission("ManageEmployees");
         public bool IsAdmin => CurrentUserSession.HasPermission("AdminAll");
 
+        public ICommand NavigateToPurchaseOrder { get; set; }
         public ICommand NavigateToInventoryCommand { get; set; }
         public ICommand NavigateToProductionCommand { get; set; }
         public ICommand NavigateToArtisanCommand { get; set; }
@@ -20,10 +21,12 @@ namespace CbcRoastersErp.ViewModels
         public ICommand NavigateToBigCommerceCommand { get; set; }
         public ICommand NavigateToBigCommerceOrdersCommand { get; set; }
         public ICommand NavigateToCustomerCommand { get; set; }
+        // Administration
         public ICommand NavigateToApplicationLogsCommand { get; set; }
         public ICommand NavigateToBatchScheduleCommand { get; set; }
         public ICommand NavigateToSalesDashboardCommand { get; set; } // Sales Dashboard
         public ICommand NavigateToMasterDataCommand { get; set; } // Master Data Dashboard
+        public ICommand NavigateToSuppliersCommand { get; set; } // Suppliers Command
 
         // HR
         public ICommand NavigateToHRPerformanceCommand { get; set; }
