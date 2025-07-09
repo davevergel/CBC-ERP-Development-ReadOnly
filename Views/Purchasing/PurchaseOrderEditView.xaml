@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.Purchasing.PurchaseOrderEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views.Purchasing"
+             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels.Purchasing"
+             xmlns:cnv="clr-namespace:CbcRoastersErp.Converters"
+             mc:Ignorable="d" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <cnv:BooleanToModeConverter x:Key="BooleanToModeConverter"/>
+    </UserControl.Resources>
+
+
+
+    <Grid Margin="20">
+        <StackPanel Margin="10">
+            <!-- Header -->
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Border Background="DarkBlue" Padding="20" Width="Auto">
+                    <TextBlock Text="{Binding Path=IsEditMode, Converter={StaticResource BooleanToModeConverter}}"
+                   FontSize="22" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="PO Number:" Width="100" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Order.po_number, Mode=TwoWay}" Width="200" IsReadOnly="True"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Supplier:" Width="100" VerticalAlignment="Center"/>
+                <ComboBox Width="300"
+                          ItemsSource="{Binding SupplierOptions}"
+                          SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}"
+                          DisplayMemberPath="Supplier_Name"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Order Date:" Width="100" VerticalAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding Order.OrderDate, Mode=TwoWay}" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Status:" Width="100" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding StatusOptions}"
+                          SelectedItem="{Binding Order.Status, Mode=TwoWay}"
+                          Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Invoice PDF Path:" Width="100" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Order.InvoicePdfPath}" Width="300" IsReadOnly="True"/>
+            </StackPanel>
+
+            <!-- Order Items -->
+            <GroupBox Header="Items" Margin="0,20,0,0" FontWeight="Bold">
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                        <Button Content="Add Item" Command="{Binding AddItemCommand}" Width="100" Margin="0,0,10,0"/>
+                        <Button Content="Remove Item" Command="{Binding RemoveItemCommand}" Width="150"/>
+                    </StackPanel>
+
+                    <DataGrid ItemsSource="{Binding OrderItems}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  Margin="0,0,0,10"
+                  IsReadOnly="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product" Binding="{Binding ProductName}" Width="*" />
+                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="100" />
+                            <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+            <StackPanel Orientation="Vertical" Margin="0,20,0,0" HorizontalAlignment="Right" Width="300">
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Subtotal:" Width="120"/>
+                    <TextBox Text="{Binding Order.Subtotal}" IsReadOnly="True" Width="150"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Shipping Cost:" Width="120"/>
+                    <TextBox Text="{Binding Order.ShippingCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Tax:" Width="120"/>
+                    <TextBox Text="{Binding Order.TaxAmount}" IsReadOnly="True" Width="150"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Total:" FontWeight="Bold" Width="120"/>
+                    <TextBox Text="{Binding Order.TotalAmount}" IsReadOnly="True" FontWeight="Bold" Width="150"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="80"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="80" Margin="10,0,0,0"/>
+                <Button Content="Print PO" Command="{Binding PrintCommand}" Width="100" Margin="10,0,0,0"/>
+                <Button Content="Export to PDF" Command="{Binding ExportToPdfCommand}" Margin="10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button Content="Import from PDF" Command="{Binding ImportFromPdfCommand}" Margin="10" />
+                <Button Content="UpLoad Invoice" Command="{Binding UploadInvoiceCommand}" Margin="10" />
+                <Button Content="View Invoice" Command="{Binding ViewInvoiceCommand}" Margin="10" />
+
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+
+</UserControl>
