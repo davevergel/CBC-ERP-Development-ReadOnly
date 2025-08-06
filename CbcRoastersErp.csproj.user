@@ -76,6 +76,18 @@
     <Compile Update="Views\HR\HrEmployeeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Operations\Planning\AddEditFarmersMarketProductionScheduleItemView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Planning\AddEditFarmersMarketScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Planning\FarmersMarketProductionScheduleItemsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\Planning\FarmersMarketProductionScheduleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Operations\Production\AddEditBatchScheduleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,6 +124,12 @@
     <Compile Update="Views\Operations\RoastProfilesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Operations\SupplierEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Operations\SupplierView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\OrderManagement\BigCommerceOrdersView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -139,15 +157,30 @@
     <Compile Update="Views\Operations\Production\ProductionView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Purchasing\PurchaseOrderEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Purchasing\PurchaseOrderView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SalesDashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Administration\UserManagement\UserManagementView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\SettingsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\LightTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\DarkTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Administration\MasterData\FinishedGoodsViews\AddEditMdFinishedGoodsView.xaml">
@@ -219,6 +252,18 @@
     <Page Update="Views\HR\HrEmployeeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Operations\Planning\AddEditFarmersMarketProductionScheduleItemView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Planning\AddEditFarmersMarketScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Planning\FarmersMarketProductionScheduleItemsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\Planning\FarmersMarketProductionScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Operations\Production\AddEditBatchScheduleView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -255,6 +300,12 @@
     <Page Update="Views\Operations\RoastProfilesView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Operations\SupplierEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Operations\SupplierView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\OrderManagement\BigCommerceOrdersView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -280,6 +331,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Operations\Production\ProductionView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Purchasing\PurchaseOrderEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Purchasing\PurchaseOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SalesDashboardView.xaml">

@@ -4,6 +4,7 @@ using CbcRoastersErp.Services;
 using CbcRoastersErp.Helpers;
 using CbcRoastersErp.Helpers.converters;
 using CbcRoastersErp.Helpers.Converters;
+using CbcRoastersErp.Converters;
 
 namespace CbcRoastersErp
 {
@@ -32,6 +33,8 @@ namespace CbcRoastersErp
             Resources.Add("BooleanToVisibilityConverter", new BooleanToVisibilityConverter() );
             Resources.Add("InverseBooleanToVisibilityConverter", new InverseBooleanToVisibilityConverter());
             Resources.Add("NullToBoolConverter", new NullToBoolConverter());
+            Resources.Add("BooleanToModeConverter", new BooleanToModeConverter());
+            Resources.Add("NullOrZeroToAddEditTitleConverter", new NullOrZeroToAddEditTitleConverter());
         }
     }
 
