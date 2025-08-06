@@ -11,34 +11,48 @@
     
     <Grid Background="#f8f9fa">
         <DockPanel>
-            <!-- Header -->
-            <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
-                <TextBlock Text="Customer Management" Foreground="White" FontSize="22" FontWeight="SemiBold" />
-            </Border>
+            <StackPanel>
+                <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <!-- Logo -->
+                        <Image Source="/Views/CBC_Logo_500x500.png"
+                               Width="50"
+                               Height="50"
+                               Stretch="Uniform"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <!-- Header -->
+                        <TextBlock Text="Customer Management" 
+                                   Style="{StaticResource Heading1TextBlock}"
+                                   Margin="50,0,0,0"/>
+                    </StackPanel>
+                </Border>
 
-            <!-- Controls -->
-            <StackPanel Orientation="Horizontal" Margin="10" DockPanel.Dock="Top" HorizontalAlignment="Right">
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"
-                     materialDesign:HintAssist.Hint="Search Customer" VerticalAlignment="Center"/>
-                <Button Content="Back to Dashboard" 
-                        Margin="0,0,10,0" Width="200"
-                        Command="{Binding NavigateBackCommand}" 
-                        Style="{StaticResource MaterialDesignRaisedButton}" />
+                <!-- Controls -->
+                <StackPanel Orientation="Horizontal" Margin="10" DockPanel.Dock="Top" HorizontalAlignment="Right">
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Width="200" Margin="10"
+                             materialDesign:HintAssist.Hint="Search Customer" 
+                             VerticalAlignment="Center"/>
+                    <Button Content="Back to Dashboard" 
+                            Margin="10,0,10,0" Width="150"
+                            Command="{Binding NavigateBackCommand}" 
+                            Style="{StaticResource PrimaryButton}" />
+                </StackPanel>
+
+                <!-- Table -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="False" Margin="10" CanUserSortColumns="True" CanUserReorderColumns="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company}" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding CustomerType}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
             </StackPanel>
-
-            <!-- Table -->
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="False" Margin="10" CanUserSortColumns="True" CanUserReorderColumns="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
-                        <DataGridTextColumn Header="Company" Binding="{Binding Company}" />
-                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                        <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
-                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
-                        <DataGridTextColumn Header="Type" Binding="{Binding CustomerType}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </ScrollViewer>
         </DockPanel>
     </Grid>
 </UserControl>

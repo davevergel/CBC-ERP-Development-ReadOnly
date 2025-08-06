@@ -3,55 +3,153 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
              mc:Ignorable="d"
+             Background="{DynamicResource BackgroundBrush}"
              xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
              xmlns:models="clr-namespace:CbcRoastersErp.Models"
-             d:DesignHeight="450" Width="1346">
-    <UserControl.DataContext>
-        <vm:BigCommerceSyncViewModel />
-    </UserControl.DataContext>
+             Padding="20">
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="Auto"/>
+            <!-- Status Message -->
+            <RowDefinition Height="*"/>
+            <!-- TabControl -->
+            <RowDefinition Height="Auto"/>
+            <!-- Back Button -->
+        </Grid.RowDefinitions>
 
-    <DockPanel>
         <!-- Header -->
         <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
-            <TextBlock Text="BigCommerce Orders" Foreground="White"
-                           FontSize="22" FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Image Source="/Views/CBC_Logo_500x500.png"
+                   Width="50"
+                   Height="50"
+                   Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                <TextBlock Text="Sync BigCommerce Orders" Foreground="White"
+                           Margin="50 0 0 0"
+                           Style="{StaticResource Heading2TextBlock}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
         </Border>
-    <!-- Progress Indicator -->
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10" DockPanel.Dock="Top">
-        <TextBlock Text="{Binding StatusMessage}" Margin="0,0,10,0" VerticalAlignment="Center" />
-        <ProgressBar Width="200" Height="20" IsIndeterminate="True"
-                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter }}" />
-    </StackPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
-            <Button Content="Back to Dashboard" Command="{Binding NavigateBackCommand}" Margin="5" />
-            <Button Content="Sync Customers" Command="{Binding SyncCustomersCommand}" Margin="5"/>
-            <Button Content="Sync Orders by Date"
-                    Command="{Binding SyncOrdersByDateCommand}"
-                    Style="{StaticResource MaterialDesignRaisedButton}"
-                    Background="{DynamicResource PrimaryHueMidBrush}"
-                    Foreground="White" />
-            <ComboBox ItemsSource="{Binding OrderStatuses}"
-                      DisplayMemberPath="Name"
-                      SelectedItem="{Binding SelectedOrderStatus}"
-                      Width="200"
-                      Margin="5"/>
-            <DatePicker Width="150" Margin="0,0,10,0" SelectedDate="{Binding StartDate}" />
-            <DatePicker Width="150" Margin="0,0,10,0" SelectedDate="{Binding EndDate}" />
 
-        </StackPanel>
+        <!-- Status Message -->
+        <TextBlock Grid.Row="1"
+                   Text="{Binding StatusMessage}"
+                   Foreground="{DynamicResource PrimaryHueMidBrush}"
+                   FontWeight="SemiBold"
+                   Margin="0 0 0 10"/>
 
-        <TabControl Margin="10">
-            <TabItem Header="Customers">
-                <DataGrid ItemsSource="{Binding Customers}" AutoGenerateColumns="True" CanUserSortColumns="True" CanUserReorderColumns="True"/>
+        <!-- TabControl -->
+        <TabControl Grid.Row="2" Style="{StaticResource BrandTabControl}" Margin="0 0 0 20">
+
+            <!-- Customers Tab -->
+            <TabItem Style="{StaticResource BrandedTabItem}" Header="Customers">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Sync Customers Button -->
+                    <Button Grid.Row="0"
+                            Content="Sync Customers"
+                            Command="{Binding SyncCustomersCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Width="150"
+                            HorizontalAlignment="Left"
+                            Margin="0 0 0 10"/>
+
+                    <!-- Customers DataGrid -->
+                    <DataGrid Grid.Row="1"
+                              ItemsSource="{Binding Customers}"
+                              AutoGenerateColumns="False"
+                              Style="{StaticResource MaterialDesignDataGrid}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerID}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
             </TabItem>
-            <TabItem Header="Orders">
-                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="True" CanUserSortColumns="True" CanUserReorderColumns="True"/>
+
+            <!-- Orders Tab -->
+            <TabItem Style="{StaticResource BrandedTabItem}" Header="Orders" Padding="10">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Filters -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Action Buttons -->
+                        <RowDefinition Height="*"/>
+                        <!-- Orders DataGrid -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Filters -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 10">
+                        <ComboBox ItemsSource="{Binding OrderStatuses}"
+                                  SelectedItem="{Binding SelectedOrderStatus, Mode=TwoWay}"
+                                  DisplayMemberPath="Name"
+                                  materialDesign:HintAssist.Hint="Order Status"
+                                  Style="{StaticResource BrandedComboBox}"
+                                  Width="200"/>
+
+                        <DatePicker SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}"
+                                    materialDesign:HintAssist.Hint="Start Date"
+                                    Style="{StaticResource BrandedDatePicker}"
+                                    Width="150"/>
+
+                        <DatePicker SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}"
+                                    materialDesign:HintAssist.Hint="End Date"
+                                    Style="{StaticResource BrandedDatePicker}"
+                                    Width="150"/>
+                    </StackPanel>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 10">
+                        <Button Content="Sync Orders"
+                                Command="{Binding SyncOrdersCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                Width="150"/>
+
+                        <Button Content="Sync Orders By Date"
+                                Command="{Binding SyncOrdersByDateCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                Width="180"/>
+                    </StackPanel>
+
+                    <!-- Orders DataGrid -->
+                    <DataGrid Grid.Row="2"
+                              ItemsSource="{Binding Orders}"
+                              AutoGenerateColumns="False"
+                              Style="{StaticResource MaterialDesignDataGrid}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Order #" Binding="{Binding BigCommerceID}"/>
+                            <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding OrderStatus}"/>
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateCreated, StringFormat={}{0:MM/dd/yyyy}}"/>
+                            <DataGridTextColumn Header="Total" Binding="{Binding OrderTotal, StringFormat={}{0:C}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
             </TabItem>
+
         </TabControl>
-    </DockPanel>
-</UserControl> 
+
+        <!-- Back Button -->
+        <Button Grid.Row="3"
+                Content="Back"
+                Command="{Binding NavigateBackCommand}"
+                Style="{StaticResource SecondaryButton}"
+                HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>
