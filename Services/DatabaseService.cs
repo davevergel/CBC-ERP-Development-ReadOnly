@@ -6,7 +6,7 @@ namespace CbcRoastersErp.Services
 {
     public class DatabaseService
     {
-        private static ApplicationDbContext _context;
+        private static ApplicationDbContext? _context;
 
         public static void Initialize(IConfiguration config)
         {
@@ -18,6 +18,9 @@ namespace CbcRoastersErp.Services
             _context = new ApplicationDbContext(options);
         }
 
-        public static ApplicationDbContext GetDbContext() => _context;
+        public static ApplicationDbContext GetDbContext()
+        {
+            return _context;
+        }
     }
 }
