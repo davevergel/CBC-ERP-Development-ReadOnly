@@ -28,5 +28,31 @@ namespace CbcRoastersErp.Repositories.Finance
 
             return await _db.ExecuteScalarAsync<decimal>(sql, new { accountType, startDate, endDate });
         }
+
+        public async Task<IEnumerable<(string SupplierName, decimal Amount)>> GetOpenPOLiabilitiesAsync()
+        {
+            const string sql = @"
+        SELECT s.Supplier_Name AS SupplierName,
+               SUM(po.TotalAmount) AS Amount
+        FROM purchase_orders po
+        INNER JOIN Suppliers s ON po.Supplier_id = s.Supplier_id
+        WHERE po.Status IN ('Pending', 'Approved')
+        GROUP BY s.Supplier_Name";
+
+            using var conn = DatabaseHelper.GetOpenConnection();
+            return await conn.QueryAsync<(string SupplierName, decimal Amount)>(sql);
+        }
+
+        public async Task<decimal> GetTotalOpenPOLiabilitiesAsync()
+        {
+            const string sql = @"
+        SELECT SUM(TotalAmount)
+        FROM purchase_orders
+        WHERE Status IN ('Pending', 'Approved');";
+
+            using var conn = DatabaseHelper.GetOpenConnection();
+            return await conn.ExecuteScalarAsync<decimal>(sql);
+        }
+
     }
 }

@@ -14,11 +14,17 @@ namespace CbcRoastersErp.Helpers
         }
 
 
-        // New method for returning an open connection
         public static IDbConnection GetOpenConnection()
         {
             var connection = new MySqlConnection(_connectionString);
             connection.Open();
+            return connection;
+        }
+
+        public static async Task<MySqlConnection> GetOpenConnectionAsync()
+        {
+            var connection = new MySqlConnection(_connectionString);
+            await connection.OpenAsync();
             return connection;
         }
     }

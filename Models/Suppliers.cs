@@ -14,5 +14,6 @@ namespace CbcRoastersErp.Models
         public string Contact_phone { get; set; }
         public string Address { get; set; }
         public DateTime Created_at { get; set; }
+
     }
 }

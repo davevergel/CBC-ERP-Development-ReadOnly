@@ -27,23 +27,46 @@ namespace CbcRoastersErp.Repositories.Finance
 
         public async Task AddAsync(Account account)
         {
+            try {
             const string sql = @"INSERT INTO Accounts (AccountName, AccountType, IsActive)
                                  VALUES (@AccountName, @AccountType, @IsActive)";
             await _db.ExecuteAsync(sql, account);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                ApplicationLogger.Log(ex, nameof(AddAsync), nameof(AccountRepository), Environment.UserName);
+            }
         }
 
         public async Task UpdateAsync(Account account)
         {
-            const string sql = @"UPDATE Accounts SET AccountName = @AccountName, 
+            try
+            {
+                const string sql = @"UPDATE Accounts SET AccountName = @AccountName, 
                                  AccountType = @AccountType, IsActive = @IsActive
                                  WHERE AccountID = @AccountID";
-            await _db.ExecuteAsync(sql, account);
+                await _db.ExecuteAsync(sql, account);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                ApplicationLogger.Log(ex, nameof(UpdateAsync), nameof(AccountRepository), Environment.UserName);
+            }
         }
 
         public async Task DeleteAsync(int id)
         {
-            const string sql = "UPDATE Accounts SET IsActive = FALSE WHERE AccountID = @id";
-            await _db.ExecuteAsync(sql, new { id });
+            try
+            {
+                const string sql = "UPDATE Accounts SET IsActive = FALSE WHERE AccountID = @id";
+                await _db.ExecuteAsync(sql, new { id });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                ApplicationLogger.Log(ex, nameof(DeleteAsync), nameof(AccountRepository), Environment.UserName);
+            }
         }
     }
 }
