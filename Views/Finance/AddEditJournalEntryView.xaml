@@ -22,6 +22,7 @@
                       CanUserAddRows="True" CanUserDeleteRows="True" Margin="0,0,0,10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID, Mode=TwoWay}" Width="*"/>
+                    <DataGridTextColumn Header="Account Name" Binding="{Binding AccountName, Mode=TwoWay}" Width="*"/>
                     <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Mode=TwoWay}" Width="*"/>
                     <DataGridCheckBoxColumn Header="Is Debit" Binding="{Binding IsDebit, Mode=TwoWay}" Width="*"/>
                 </DataGrid.Columns>
