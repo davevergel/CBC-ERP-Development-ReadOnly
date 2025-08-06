@@ -3,37 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CbcRoastersErp.Views" xmlns:viewmodels="clr-namespace:CbcRoastersErp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddEditBatchViewModel}"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Batch Roasting Details" FontSize="18" FontWeight="Bold"
-                   HorizontalAlignment="Center" Margin="0,10,0,0"/>
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             xmlns:viewmodels="clr-namespace:CbcRoastersErp.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DataContext="{d:DesignInstance Type=viewmodels:AddEditBatchViewModel}"
+             mc:Ignorable="d"
+             Background="{DynamicResource BackgroundBrush}"
+             d:DesignWidth="800">
 
-        <StackPanel Margin="20">
-            <TextBlock Text="Roast Date"/>
-            <DatePicker SelectedDate="{Binding Batch.RoastDate}" Width="300"/>
+    <Grid Margin="30">
+        <materialDesign:Card Padding="30">
+            <StackPanel Margin="15">
 
-            <TextBlock Text="Finished Good"/>
-            <ComboBox ItemsSource="{Binding FinishedGoodsList}" 
-              SelectedItem="{Binding SelectedFinishedGood}" 
-              DisplayMemberPath="ProductName" Width="300"/>
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
+                    <Image Source="/Views/CBC_Logo_500x500.png"
+                           Width="50" Height="50"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="Batch Roasting Details"
+                               Style="{StaticResource Heading1TextBlock}"
+                               VerticalAlignment="Center"
+                               Margin="30,0,0,0"/>
+                </StackPanel>
 
-            <TextBlock Text="Batch Size"/>
-            <TextBox Text="{Binding Batch.BatchSize}" Width="300"/>
+                <!-- Roast Date -->
+                <DatePicker SelectedDate="{Binding Batch.RoastDate}"
+                            materialDesign:HintAssist.Hint="Roast Date"
+                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                            Width="300"/>
 
-            <TextBlock Text="Roasting Profile"/>
-            <ComboBox ItemsSource="{Binding RoastingProfilesList}" 
-                  SelectedItem="{Binding SelectedRoastingProfile}" 
-                  DisplayMemberPath="ProfileName" Width="300"/>
+                <!-- Finished Good -->
+                <ComboBox ItemsSource="{Binding FinishedGoodsList}"
+                          SelectedItem="{Binding SelectedFinishedGood}"
+                          DisplayMemberPath="ProductName"
+                          materialDesign:HintAssist.Hint="Finished Good"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Width="300"/>
 
-            <TextBlock Text="Roast Level" />
-            <TextBox Text="{Binding Batch.RoastLevel}" Width="300"/>
+                <!-- Batch Size -->
+                <TextBox Text="{Binding Batch.BatchSize}"
+                         materialDesign:HintAssist.Hint="Batch Size"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="5"/>
-                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5"/>
+                <!-- Roasting Profile -->
+                <ComboBox ItemsSource="{Binding RoastingProfilesList}"
+                          SelectedItem="{Binding SelectedRoastingProfile}"
+                          DisplayMemberPath="ProfileName"
+                          materialDesign:HintAssist.Hint="Roasting Profile"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Width="300"/>
+
+                <!-- Roast Level -->
+                <TextBox Text="{Binding Batch.RoastLevel}"
+                         materialDesign:HintAssist.Hint="Roast Level"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Save"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource PrimaryButton}"
+                            Width="120"/>
+                    <Button Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            Width="120"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

@@ -1,41 +1,110 @@
 ﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditTeaView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CbcRoastersErp.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="{DynamicResource MaterialDesignPaper}"
+             Padding="20">
+
     <Grid>
-        <TextBlock Text="Tea Inventory Details" FontSize="18" FontWeight="Bold"
-                   HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Form -->
+            <RowDefinition Height="Auto"/>
+            <!-- Actions -->
+        </Grid.RowDefinitions>
 
-        <StackPanel Margin="20">
-            <TextBlock Text="Tea Name"/>
-            <TextBox Text="{Binding Tea.TeaName}" Width="300"/>
-
-            <TextBlock Text="Type" />
-            <TextBox Text="{Binding Tea.TeaType}" Width="300"/>
-            
-            <TextBlock Text="Origin"/>
-            <TextBox Text="{Binding Tea.Origin}" Width="300"/>
-
-            <TextBlock Text="Stock Level"/>
-            <TextBox Text="{Binding Tea.StockLevel}" Width="300"/>
-
-            <TextBlock Text="Price"/>
-            <TextBox Text="{Binding Tea.Price}" Width="300"/>
-
-            <TextBlock Text="Supplier"/>
-            <ComboBox ItemsSource="{Binding SuppliersList}" 
-              SelectedItem="{Binding SelectedSupplier}" 
-              DisplayMemberPath="Supplier_Name"
-              Width="300"/>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="5"/>
-                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5"/>
-            </StackPanel>
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
+            <Image Source="/Views/CBC_Logo_500x500.png"
+                   Width="50"
+                   Height="50"
+                   Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+            <TextBlock Grid.Row="0"
+                       Text="{Binding Path=Tea.TeaID, Converter={StaticResource NullOrZeroToAddEditTitleConverter}, ConverterParameter=Tea}"
+                       Style="{StaticResource Heading2TextBlock}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="40 0 0 20"/>
         </StackPanel>
+
+        <!-- Form -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="10">
+
+                <TextBox Text="{Binding Tea.TeaName, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Tea Name"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.TeaType, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Tea Type"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.Origin, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Origin"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.Certifications, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Certifications"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.Quantity, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Quantity (lbs)"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.BatchNumber, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Batch Number"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.StockLevel, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Stock Level"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <ComboBox ItemsSource="{Binding SuppliersList}"
+                          SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}"
+                          DisplayMemberPath="Supplier_Name"
+                          materialDesign:HintAssist.Hint="Supplier"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Width="300"/>
+
+                <DatePicker SelectedDate="{Binding Tea.DateReceived, UpdateSourceTrigger=PropertyChanged}"
+                            materialDesign:HintAssist.Hint="Date Received"
+                            Style="{StaticResource MaterialDesignDatePicker}"
+                            Width="300"/>
+
+                <TextBox Text="{Binding Tea.HarvestYear, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="Harvest Year"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+                <TextBox Text="{Binding Tea.Price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}"
+                         materialDesign:HintAssist.Hint="Price ($)"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Width="300"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Actions -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Width="100"/>
+            <Button Content="Save"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Width="100"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CbcRoastersErp.Views"
              xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             Background="{DynamicResource BackgroundBrush}">
 
     <UserControl.DataContext>
         <vm:ProductionViewModel />
@@ -15,9 +15,18 @@
     <Grid Background="#f8f9fa">
         <DockPanel LastChildFill="True">
             <!-- Header -->
-            <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
-                <TextBlock Text="Production Management" Foreground="White"
-                           FontSize="22" FontWeight="SemiBold" />
+            <Border Style="{StaticResource BrandedBorder}" Padding="20" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Image Source="/Views/CBC_Logo_500x500.png"
+                   Width="50" Height="50"
+                   Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   DockPanel.Dock="Left"/>
+                    <TextBlock Text="Production Management"
+                               Style="{StaticResource Heading1TextBlock}"
+                               HorizontalAlignment="Center"
+                               Margin="30,0,0,0"/>
+                </StackPanel>
             </Border>
 
             <!-- Pagination Controls -->
@@ -25,9 +34,12 @@
                 Margin="10" DockPanel.Dock="Bottom">
                 <Button Content="Previous" Command="{Binding PageChangedCommand}" 
                         CommandParameter="Previous"
+                        Style="{StaticResource SecondaryButton}"
                         IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}"
                         Margin="0,0,5,0" />
                 <Button Content="Next"
+                        Margin="0,0,5,0"
+                        Style="{StaticResource SecondaryButton}"
                         Command="{Binding PageChangedCommand}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}">
@@ -43,10 +55,11 @@
                 <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Top">
                     <Button Content="Back to Dashboard"
                             Command="{Binding NavigateBackCommand}"
+                            Style="{StaticResource SecondaryButton}"
                             HorizontalAlignment="Left"
                             Margin="0,0,0,10"/>
-                    <TabControl>
-                        <TabItem Header="Batch Roasting">
+                    <TabControl Style="{StaticResource BrandTabControl}">
+                        <TabItem Style="{StaticResource BrandedTabItem}" Header="Batch Roasting">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -54,20 +67,22 @@
                                 </Grid.RowDefinitions>
                                 <Button Content="Add/Edit Batch"
                                         Command="{Binding OpenAddEditBatchCommand}"
-                                         Margin="0,0,125,0"
+                                        Style="{StaticResource PrimaryButton}"
+                                         Margin="0,0,170,0"
                                         HorizontalAlignment="Right"
                                         Width="150"/>
                                 <Button Content="Delete Batch" 
                                         Command="{Binding DeleteBatchCommand}"
+                                        Style="{StaticResource PrimaryButton}"
                                         HorizontalAlignment="Right"
-                                        Width="100" Margin="0,0,10,0" />
-                                <DataGrid ItemsSource="{Binding RoastBatches}"
+                                        Width="150" Margin="10,0,10,0" />
+                                <DataGrid Style="{StaticResource BrandDataGrid}" ItemsSource="{Binding RoastBatches}"
                                           SelectedItem="{Binding SelectedBatch}"
                                           AutoGenerateColumns="False"
                                           Grid.Row="1"
                                           IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Batch #" Binding="{Binding BatchNumber}" />
+                                        <DataGridTextColumn Header="Batch 10#" Binding="{Binding BatchNumber}" />
                                         <DataGridTextColumn Header="Roast Date" Binding="{Binding RoastDate}" />
                                         <DataGridTextColumn Header="Batch Size" Binding="{Binding BatchSize}" />
                                         <DataGridTextColumn Header="Finished Good" Binding="{Binding FinishedGoodName}" />

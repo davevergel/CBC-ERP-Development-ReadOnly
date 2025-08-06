@@ -6,27 +6,54 @@
              xmlns:local="clr-namespace:CbcRoastersErp.Views"
              xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels" d:DataContext="{d:DesignInstance Type=vm:BatchScheduleViewModel}"
              mc:Ignorable="d" 
+             Background="{DynamicResource BackgroundBrush}"
              d:DesignHeight="500" d:DesignWidth="800">
 
     <DockPanel>
         <!-- Header -->
-        <Border Background="#2c3e50" Padding="20" DockPanel.Dock="Top">
-            <TextBlock Text="Batch Scheduling" Foreground="White"
-                       FontSize="22" FontWeight="SemiBold" />
+        <Border Padding="20" 
+                DockPanel.Dock="Top"
+                Style="{StaticResource BrandedBorder}">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <!-- Logo -->
+                <Image Source="/Views/CBC_Logo_500x500.png"
+                           Width="50" Height="50"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           DockPanel.Dock="Left"/>
+                <TextBlock Text="Batch Scheduling"
+                           Style="{StaticResource Heading1TextBlock}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Margin="30,0,0,0"
+                           FontSize="22" FontWeight="SemiBold" />
+            </StackPanel>
         </Border>
 
         <!-- Action Buttons -->
         <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" DockPanel.Dock="Top">
+            <Button Content="Start Roast"
+                    Command="{Binding StartRoastCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Width="150"/>
+            <Button Content="Mark As Completed" 
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding CompleteRoastCommand}" 
+                    Width="150" />
             <Button Content="Add/Edit Schedule" Margin="5"
+                    Style="{StaticResource PrimaryButton}"
                     Command="{Binding OpenAddEditScheduleCommand}"/>
 
             <Button Content="Delete Schedule" Margin="5"
+                    Style="{StaticResource PrimaryButton}"
                     Command="{Binding DeleteScheduleCommand}" />
 
             <Button Content="Assign to Batch" Margin="5"
+                    Style="{StaticResource PrimaryButton}"
                     Command="{Binding AssignToBatchCommand}" />
 
             <Button Content="Back to Dashboard" Margin="5"
+                    Style="{StaticResource SecondaryButton}"
                     Command="{Binding NavigateBackCommand}" />
         </StackPanel>
 
@@ -36,6 +63,7 @@
                       SelectedItem="{Binding SelectedSchedule}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
+                      Style="{StaticResource BrandDataGrid}"
                       Margin="10"
                       IsReadOnly="True">
                 <DataGrid.Columns>

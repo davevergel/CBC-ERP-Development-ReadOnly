@@ -1,86 +1,108 @@
 ﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditGreenCoffeeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:CbcRoastersErp.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Border Background="White" Padding="20" CornerRadius="10">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+             xmlns:Converter="clr-namespace:CbcRoastersErp.Helpers.converters"
+             Background="{DynamicResource MaterialDesignPaper}"
+             Width="600" Padding="20">
 
-                <!-- Header -->
-                <TextBlock Text="Green Coffee Details" FontSize="20" FontWeight="Bold" 
-                           HorizontalAlignment="Center" Margin="0,0,0,20"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Form -->
+            <RowDefinition Height="Auto"/>
+            <!-- Action Buttons -->
+        </Grid.RowDefinitions>
 
-                <!-- Form Fields -->
-                <Grid Grid.Row="1" Margin="0,10,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
+            <Image Source="/Views/CBC_Logo_500x500.png"
+                   Width="50"
+                   Height="50"
+                   Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+            <TextBlock Grid.Row="0"
+                       Text="{Binding Path=GreenCoffee.GreenCoffeeID, Converter={StaticResource NullOrZeroToAddEditTitleConverter}, ConverterParameter=Green Coffee}"
+                       Style="{StaticResource Heading2TextBlock}"
+                       Margin="40 0 0 20"/>
+        </StackPanel>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <!-- Form Fields -->
+        <StackPanel Grid.Row="1" Margin="0 0 0 20">
 
-                    <TextBlock Text="Coffee Name:" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.CoffeeName}" Grid.Row="0" Grid.Column="1" Margin="5"/>
+            <TextBox Text="{Binding GreenCoffee.CoffeeName, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Coffee Name"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Width="300"/>
 
-                    <TextBlock Text="Origin:" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.Origin}" Grid.Row="1" Grid.Column="1" Margin="5"/>
+            <TextBox Text="{Binding GreenCoffee.Origin, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Origin"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Width="300"/>
 
-                    <TextBlock Text="Processing Method:" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.ProcessType}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+            <TextBox Text="{Binding GreenCoffee.Quantity, UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="Quantity (lbs)"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Width="300"/>
+            
+            <TextBox Text="{Binding GreenCoffee.Variety, UpdateSourceTrigger=PropertyChanged}"
+                       materialDesign:HintAssist.Hint="Variety"
+                       Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                       Width="300"/>
+            <TextBox Text="{Binding GreenCoffee.ProcessingMethod, UpdateSourceTrigger=PropertyChanged}"
+                          materialDesign:HintAssist.Hint="Processing Method"
+                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                          Width="300"/>
+            <TextBox Text="{Binding GreenCoffee.Certifications, UpdateSourceTrigger=PropertyChanged}"
+                          materialDesign:HintAssist.Hint="Certifications"
+                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                          Width="300"/>
+            <TextBox Text="{Binding GreenCoffee.Price, UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Price per lb"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Width="300"/>
+            <TextBox Text="{Binding GreenCoffee.HarvestYear, UpdateSourceTrigger=PropertyChanged}"    
+                        materialDesign:HintAssist.Hint="Harvest Year"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Width="300"
+                        TextWrapping="Wrap"/>
+            <TextBox Text="{Binding GreenCoffee.BatchNumber, UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Batch Number"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Width="300"
+                        TextWrapping="Wrap"/>
+            <TextBox Text="{Binding GreenCoffee.StockLevel, UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Stock Level"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Width="300"
+                        TextWrapping="Wrap"/>
+            <DatePicker SelectedDate="{Binding GreenCoffee.DateReceived, UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Received Date"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                        Width="300"/>
+            <!-- Supplier ComboBox -->
+            <ComboBox ItemsSource="{Binding SuppliersList}"
+                      SelectedItem="{Binding SelectedSupplier, Mode=TwoWay}"
+                      DisplayMemberPath="Supplier_Name"
+                      materialDesign:HintAssist.Hint="Supplier"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      Width="300"/>
+        </StackPanel>
 
-                    <TextBlock Text="Variety:" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.Variety}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Width="100"/>
+            <Button Content="Save"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Width="100"/>
+        </StackPanel>
 
-                    <TextBlock Text="Certifications:" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.Certifications}" Grid.Row="4" Grid.Column="1" Margin="5"/>
-
-                    <TextBlock Text="Harvest Year:" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.HarvestYear}" Grid.Row="5" Grid.Column="1" Margin="5"/>
-
-                    <TextBlock Text="Stock Level:" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.StockLevel}" Grid.Row="6" Grid.Column="1" Margin="5"/>
-
-                    <TextBlock Text="Price:" Grid.Row="7" Grid.Column="0" Margin="0,5"/>
-                    <TextBox Text="{Binding GreenCoffee.Price}" Grid.Row="7" Grid.Column="1" Margin="5"/>
-
-                    <TextBlock Text="Supplier:" Grid.Row="8" Grid.Column="0" Margin="0,5"/>
-                    <ComboBox ItemsSource="{Binding SuppliersList}" 
-                              SelectedItem="{Binding SelectedSupplier}" 
-                              DisplayMemberPath="Supplier_Name"
-                              Grid.Row="8" Grid.Column="1" Margin="5"/>
-
-                    <TextBlock Text="Date Received:" Grid.Row="9" Grid.Column="0" Margin="0,5"/>
-                    <DatePicker SelectedDate="{Binding GreenCoffee.DateReceived}" 
-                                Grid.Row="9" Grid.Column="1" Margin="5"/>
-                </Grid>
-
-                <!-- Buttons -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                    <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="10,0"/>
-                    <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="10,0"/>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
-    </Border>
+    </Grid>
 </UserControl>
