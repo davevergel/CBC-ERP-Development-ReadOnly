@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using CbcRoastersErp.Helpers;
 using CbcRoastersErp.Models;
 using CbcRoastersErp.Services.Finance;
 using CbcRoastersErp.ViewModels;
 using CbcRoastersErp.ViewModels.Administration.MasterData;
+using CbcRoastersErp.ViewModels.Administration.MasterData.RoastingProfilesViewModels;
 using CbcRoastersErp.ViewModels.Finance;
 using CbcRoastersErp.ViewModels.HR;
+using CbcRoastersErp.ViewModels.Operations.Planning;
+using CbcRoastersErp.ViewModels.Purchasing;
 using CbcRoastersErp.Views;
 using CbcRoastersErp.Views.Administration.MasterData;
+using CbcRoastersErp.Views.Administration.MasterData.FinishedGoods;
+using CbcRoastersErp.Views.Administration.MasterData.RoastingProfilesViews;
 using CbcRoastersErp.Views.Finance;
 using CbcRoastersErp.Views.HR;
 using CbcRoastersErp.Views.Operations;
+using CbcRoastersErp.Views.Operations.Planning;
+using CbcRoastersErp.Views.Purchasing;
 
 namespace CbcRoastersErp.Factories
 {
@@ -26,28 +34,54 @@ namespace CbcRoastersErp.Factories
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new Dashboard { DataContext = vm };
                 }},
+                // Operations
                 { "Production", () => {
                     var vm = new ProductionViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     vm.OnOpenAddEditView += main.HandleOpenAddEditView;
                     return new ProductionView { DataContext = vm };
                 }},
-                    { "ArtisanRoastProfiles", () => {
-                        var vm = new RoastProfilesViewModel();
-                        vm.OnNavigationRequested += main.HandleNavigation;
-                        return new RoastProfilesView { DataContext = vm };
-                    }},
-                    { "Employee", () => {
-                        var vm = new EmployeeViewModel();
-                        vm.OnNavigationRequested += main.HandleNavigation;
-                        return new EmployeeView { DataContext = vm };
-                    }},
+                { "ArtisanRoastProfiles", () => {
+                    var vm = new RoastProfilesViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    return new RoastProfilesView { DataContext = vm };
+                }},
+                { "Employee", () => {
+                    var vm = new EmployeeViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    return new EmployeeView { DataContext = vm };
+                }},
+                { "PurchaseOrder", () => {
+                    var vm = new PurchaseOrderViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new PurchaseOrderView { DataContext = vm };
+                }},
+                { "FarmersMarketProductionScheduleItems", () => {
+                    var vm = new FarmersMarketProductionScheduleItemsViewModel(CurrentScheduleContext.Instance.SelectedScheduleId);
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new FarmersMarketProductionScheduleItemsView { DataContext = vm };
+                }},
+                { "FarmersMarketProductionSchedule", () => {
+                    var vm = new FarmersMarketProductionScheduleViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new FarmersMarketProductionScheduleView { DataContext = vm };
+                }},
                 { "Inventory", () => {
                     var vm = new InventoryViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     vm.OnOpenAddEditView += main.HandleOpenAddEditView;
                     return new InventoryView { DataContext = vm };
                 }},
+                { "BatchSchedule", () => {
+                    var vm = new BatchScheduleViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new BatchScheduleView { DataContext = vm };
+                }},
+                // HR
                 { "HR_Employee", () => {
                     var vm = new HrEmployeeViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
@@ -136,25 +170,45 @@ namespace CbcRoastersErp.Factories
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new ApplicationLogView{ DataContext = vm };
                 }},
-                { "BatchSchedule", () => {
-                    var vm = new BatchScheduleViewModel();
-                    vm.OnNavigationRequested += main.HandleNavigation;
-                    return new BatchScheduleView { DataContext = vm };
-                }},
                 { "SalesDashboard", () => {
                     var vm = new SalesDashboardViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new SalesDashboardView { DataContext = vm };
                 }},
+                // Administration
                 { "MasterDataDashboard", () => {
                     var vm = new  MasterDataDashDbViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new  MasterDataDashDbView { DataContext = vm };
                 }},
+                { "MdFinishedGoods", () => {
+                    var vm = new FinishedGoodsViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new FinishedGoodsView { DataContext = vm };
+                }},
+                { "MdRoastingProfiles", () => {
+                    var vm = new ManageRoastingProfilesViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new ManageRoastingProfilesView { DataContext = vm };
+                }},
+                {"ManageArtisan", () =>
+                {
+                    var vm = new SettingsViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    return new SettingsView { DataContext = vm };
+                } },
                 { "CustomerView", () => {
                     var vm = new CustomerViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new CustomerView { DataContext = vm };
+                }},
+                { "SupplierView", () => {
+                    var vm = new SupplierViewModel();
+                    vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
+                    return new SupplierView { DataContext = vm };
                 }},
 
                 { "Finance_Dashboard", () => {
@@ -163,6 +217,11 @@ namespace CbcRoastersErp.Factories
                     return new FinanceDashboardView { DataContext = vm };
                 }}
             };
+        }
+
+        private static void Vm_OnNavigationRequested(string obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

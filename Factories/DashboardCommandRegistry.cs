@@ -10,11 +10,14 @@ namespace CbcRoastersErp.Factories
         public static void Register(DashboardViewModel vm)
         {
             // Operations
+            vm.NavigateToPurchaseOrder = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("PurchaseOrder"));
             vm.NavigateToInventoryCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("Inventory"));
             vm.NavigateToProductionCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("Production"));
             vm.NavigateToBatchScheduleCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("BatchSchedule"));
             vm.NavigateToEmployeesCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("Employee"));
             vm.NavigateToArtisanCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("ArtisanRoastProfiles"));
+            vm.NavigateToFarmersMarketCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("FarmersMarketProductionSchedule"));
+
 
             // User Management
             vm.NavigateToUserManagementCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("UserManagement"));
@@ -45,9 +48,14 @@ namespace CbcRoastersErp.Factories
 
             // Administration
             vm.NavigateToApplicationLogsCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("ApplicationLogs"));
+            vm.NavigateToMasterDataCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("MasterDataDashboard"));
+            vm.NavigateToSuppliersCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("SupplierView"));
+            vm.NavigateToFinishedGoodsCommand = new RelayCommand(_ => vm.OnNavigationRequested.Invoke("MdFinishedGoods"));
+            vm.NavigateToManageRoastingProfilesCommand = new RelayCommand(_ => vm.OnNavigationRequested.Invoke("MdRoastingProfiles"));
+            vm.NavigateToMangaeArtisanCommand = new RelayCommand(_ => vm.OnNavigationRequested.Invoke("ManageArtisan"));
 
             // Navigate Back to Dashboard
-            vm.NavigateToBatchScheduleCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("Dashboard"));
+            vm.NavigateBackCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("Dashboard"));
 
             vm.ExitCommand = new RelayCommand(_ => System.Windows.Application.Current.Shutdown());
         }

@@ -11,6 +11,11 @@ using CbcRoastersErp.ViewModels.Administration.MasterData.FinishedGoodsViewModel
 using CbcRoastersErp.ViewModels.Administration.MasterData.RoastingProfilesViewModels;
 using CbcRoastersErp.Views.Administration.MasterData.FinishedGoodsViews;
 using CbcRoastersErp.Views.Administration.MasterData.RoastingProfilesViews;
+using CbcRoastersErp.Views.Purchasing;
+using CbcRoastersErp.Views.Operations;
+using CbcRoastersErp.ViewModels.Operations.Planning;
+using CbcRoastersErp.Views.Operations.Planning;
+using CbcRoastersErp.Views.Administration.MasterData.FinishedGoods;
 
 namespace CbcRoastersErp.Factories
 {
@@ -31,6 +36,10 @@ namespace CbcRoastersErp.Factories
                 { typeof(AddEditUserRolesViewModel), vm => new AddEditUserRolesView { DataContext = vm } },
                 { typeof(AddEditBatchScheduleViewModel), vm => new AddEditBatchScheduleView { DataContext = vm } },
                 { typeof(AddEditRoastingProfileViewModel), vm => new AddEditRoastingProfileView { DataContext = vm } },
+                { typeof(PurchaseOrderEditViewModel), vm => new PurchaseOrderEditView { DataContext = vm } },
+                { typeof(AddEditFarmersMarketProductionScheduleItemViewModel), vm => new AddEditFarmersMarketProductionScheduleItemView { DataContext = vm } },
+                { typeof(AddEditFarmersMarketScheduleViewModel), vm => new AddEditFarmersMarketScheduleView { DataContext = vm } },
+
 
                 // HR
                 { typeof(AddEditHrEmployeeViewModel), vm => new AddEditHrEmployeeView { DataContext = vm } },
@@ -41,7 +50,11 @@ namespace CbcRoastersErp.Factories
 
                 // Finance
                 { typeof(AddEditAccountViewModel), vm => new AddEditAccountView { DataContext = vm } },
-                { typeof(AddEditJournalEntryViewModel), vm => new AddEditJournalEntryView { DataContext = vm } }
+                { typeof(AddEditJournalEntryViewModel), vm => new AddEditJournalEntryView { DataContext = vm } },
+
+                // Administration
+                {typeof(SupplierEditViewModel), vm => new SupplierEditView { DataContext = vm } },
+                {typeof(ManageRoastingProfilesViewModel), vm => new ManageRoastingProfilesView { DataContext = vm } },
             };
         }
     }
