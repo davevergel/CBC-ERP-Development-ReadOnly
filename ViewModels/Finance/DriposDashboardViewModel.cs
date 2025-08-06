@@ -1,102 +1,127 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using LiveCharts;
+﻿using LiveCharts;
 using LiveCharts.Wpf;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CbcRoastersErp.Models.Finance;
 using CbcRoastersErp.Repositories.Finance;
-using CbcRoastersErp.Helpers;
 using CbcRoastersErp.Services;
 
 namespace CbcRoastersErp.ViewModels.Finance
 {
     public class DriposDashboardViewModel : INotifyPropertyChanged
     {
-        private readonly DriposSalesMetricsRepository _repo = new();
+        private readonly DriposSalesMetricsRepository _metricsRepo = new();
 
-        public SeriesCollection SeriesCollection { get; set; } = new();
-        public SeriesCollection PieSeriesCollection { get; set; } = new();
+        public SeriesCollection SeriesCollection { get; set; } = new SeriesCollection();
+        public SeriesCollection PieSeriesCollection { get; set; } = new SeriesCollection();
         public string[] Labels { get; set; } = Array.Empty<string>();
 
-        public DateTime StartDate { get; set; } = new(DateTime.Now.Year, DateTime.Now.Month, 1);
-        public DateTime EndDate { get; set; } = DateTime.Now;
-        public bool ShowPieChart { get; set; }
+        public Func<double, string> YFormatter { get; set; } = val => val.ToString("C");
 
-        public ICommand RefreshCommand { get; }
-        public ICommand NavigateBackCommand { get; }
+        public DateTime StartDate { get; set; } = DateTime.Today.AddDays(-30);
+        public DateTime EndDate { get; set; } = DateTime.Today;
 
-        public DriposDashboardViewModel()
+        public int SelectedTabIndex { get; set; } = 0;
+        private bool _showPieChart;
+        public bool ShowPieChart
         {
-            RefreshCommand = new RelayCommand(async _ => await LoadDataAsync());
-            NavigateBackCommand = new RelayCommand(_ => OnNavigationRequested?.Invoke("Dashboard"));
-            _ = LoadDataAsync();
-        }
-
-        private async Task LoadDataAsync()
-        {
-            try
+            get => _showPieChart;
+            set
             {
-                var all = (await _repo.GetByDateRangeAsync(StartDate.AddMonths(-1), EndDate)).ToList();
-
-                var current = all.Where(m => m.MetricDate >= StartDate && m.MetricDate <= EndDate).ToList();
-                var previous = all.Where(m => m.MetricDate < StartDate).ToList();
-
-                var dates = current.Select(m => m.MetricDate.Date)
-                                    .Union(previous.Select(m => m.MetricDate.Date))
-                                    .Distinct()
-                                    .OrderBy(d => d)
-                                    .ToList();
-
-                Labels = dates.Select(d => d.ToString("MM/dd")).ToArray();
-
-                var currentDict = current.GroupBy(m => m.MetricDate.Date).ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
-                var previousDict = previous.GroupBy(m => m.MetricDate.Date).ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
-
-                var currentValues = new ChartValues<decimal>(dates.Select(d => currentDict.ContainsKey(d) ? currentDict[d] : 0));
-                var previousValues = new ChartValues<decimal>(dates.Select(d => previousDict.ContainsKey(d) ? previousDict[d] : 0));
-
-                SeriesCollection = new SeriesCollection
+                if (_showPieChart != value)
                 {
-                    new ColumnSeries
-                    {
-                        Title = "Current",
-                        Values = currentValues
-                    },
-                    new ColumnSeries
-                    {
-                        Title = "Previous",
-                        Values = previousValues
-                    }
-                };
-
-                PieSeriesCollection = new SeriesCollection
-                {
-                    new PieSeries
-                    {
-                        Title = "Current",
-                        Values = new ChartValues<decimal> { current.Sum(m => m.Amount) },
-                        DataLabels = true
-                    },
-                    new PieSeries
-                    {
-                        Title = "Previous",
-                        Values = new ChartValues<decimal> { previous.Sum(m => m.Amount) },
-                        DataLabels = true
-                    }
-                };
-
-                OnPropertyChanged(nameof(SeriesCollection));
-                OnPropertyChanged(nameof(PieSeriesCollection));
-                OnPropertyChanged(nameof(Labels));
-            }
-            catch (Exception ex)
-            {
-                ApplicationLogger.Log(ex, "DriposDashboardViewModel");
+                    _showPieChart = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
-        public event Action<string>? OnNavigationRequested;
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public decimal CurrentTotal { get; set; }
+        public decimal PreviousTotal { get; set; }
+        public decimal GrowthPercent { get; set; }
+
+        public ICommand RefreshCommand => new RelayCommand(async _ => await LoadDataAsync());
+        public ICommand NavigateBackCommand => new RelayCommand(_ => OnNavigationRequested?.Invoke("Dashboard"));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<string> OnNavigationRequested;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        public async Task LoadDataAsync()
+        {
+            var all = (await _metricsRepo.GetByDateRangeAsync(StartDate.AddDays(-30), EndDate)).ToList();
+            all = SelectedTabIndex switch
+            {
+                1 => all.Where(x => x.Source == "Dripos").ToList(),
+                2 => all.Where(x => x.Source == "BigCommerce").ToList(),
+                _ => all
+            };
+
+            var previous = all.Where(x => x.MetricDate < StartDate).ToList();
+            var current = all.Where(x => x.MetricDate >= StartDate && x.MetricDate <= EndDate).ToList();
+
+            var categories = all.Select(x => x.MetricName).Distinct().ToArray();
+            Labels = categories;
+
+            var currentSums = categories.Select(cat => current.Where(x => x.MetricName == cat).Sum(x => x.Amount)).ToList();
+            var previousSums = categories.Select(cat => previous.Where(x => x.MetricName == cat).Sum(x => x.Amount)).ToList();
+
+            SeriesCollection = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "Current",
+                    Values = new ChartValues<decimal>(currentSums ?? new List<decimal>())
+                },
+                new ColumnSeries
+                {
+                    Title = "Previous",
+                    Values = new ChartValues<decimal>(previousSums ?? new List<decimal>())
+                }
+            };
+
+            PieSeriesCollection = new SeriesCollection();
+
+            if (categories != null && categories.Length > 0)
+            {
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    var value = (i < currentSums.Count && currentSums[i] != null) ? currentSums[i] : 0;
+                    PieSeriesCollection.Add(new PieSeries
+                    {
+                        Title = categories[i] ?? $"Metric {i}",
+                        Values = new ChartValues<decimal> { value },
+                        DataLabels = true
+                    });
+                }
+            }
+            else
+            {
+                PieSeriesCollection.Add(new PieSeries
+                {
+                    Title = "No Data",
+                    Values = new ChartValues<decimal> { 0 },
+                    DataLabels = true
+                });
+            }
+
+            CurrentTotal = current.Sum(x => x.Amount);
+            PreviousTotal = previous.Sum(x => x.Amount);
+            GrowthPercent = PreviousTotal == 0 ? 0 : ((CurrentTotal - PreviousTotal) / PreviousTotal) * 100;
+
+            OnPropertyChanged(nameof(SeriesCollection));
+            OnPropertyChanged(nameof(PieSeriesCollection));
+            OnPropertyChanged(nameof(Labels));
+            OnPropertyChanged(nameof(CurrentTotal));
+            OnPropertyChanged(nameof(PreviousTotal));
+            OnPropertyChanged(nameof(GrowthPercent));
+        }
     }
 }

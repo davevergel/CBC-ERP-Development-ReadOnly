@@ -148,7 +148,7 @@ namespace CbcRoastersErp.ViewModels
                             {
                                 var schedule = new BatchSchedule
                                 {
-                                    OrderID = localOrderId,
+                                    OrderID = order.BigCommerceID, //localOrderId,
                                     FinishedGoodID = finishedGood.FinishedGoodID,
                                     Quantity = product.Quantity,
                                     ScheduledDate = DateTime.Now.AddDays(1),

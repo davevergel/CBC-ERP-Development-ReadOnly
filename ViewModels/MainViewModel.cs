@@ -15,6 +15,7 @@ namespace CbcRoastersErp.ViewModels
         private readonly Stack<UserControl> _viewHistory = new();
 
         public Services.NavigationService NavigationService { get; }
+        public int CurrentScheduleId { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

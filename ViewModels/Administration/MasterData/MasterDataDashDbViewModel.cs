@@ -13,8 +13,8 @@ namespace CbcRoastersErp.ViewModels.Administration.MasterData
         public bool IsAdmin => CurrentUserSession.HasPermission("AdminAll");
 
         // Commands for navigation
-        public ICommand NavigateToManageFinishedGoodsCommand => new RelayCommand(_ => OnNavigationRequested?.Invoke("FinishedGoods"));
-        public ICommand NavigateToManageRoastingProfilesCommand => new RelayCommand(_ => OnNavigationRequested?.Invoke("RoastingProfiles"));
+        public ICommand NavigateToManageFinishedGoodsCommand => new RelayCommand(_ => OnNavigationRequested?.Invoke("MdFinishedGoods"));
+        public ICommand NavigateToManageRoastingProfilesCommand => new RelayCommand(_ => OnNavigationRequested?.Invoke("MdRoastingProfiles"));
         public ICommand NavigateBackCommand { get; }
 
         // Actions and Events

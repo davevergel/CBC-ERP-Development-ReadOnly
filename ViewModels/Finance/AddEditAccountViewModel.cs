@@ -48,6 +48,7 @@ namespace CbcRoastersErp.ViewModels.Finance
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Failed to save account: {ex.Message}", "Error");
+
             }
         }
 

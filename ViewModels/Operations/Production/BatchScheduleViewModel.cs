@@ -20,6 +20,8 @@ namespace CbcRoastersErp.ViewModels
         public ICommand OpenAddEditScheduleCommand { get; }
         public ICommand AssignToBatchCommand { get; }
         public ICommand DeleteScheduleCommand { get; }
+        public ICommand StartRoastCommand { get; }
+        public ICommand CompleteRoastCommand { get; }
 
         public ObservableCollection<BatchSchedule> Schedules
         {
@@ -40,6 +42,8 @@ namespace CbcRoastersErp.ViewModels
             DeleteScheduleCommand = new RelayCommand(DeleteSelectedSchedule, CanExecuteDeleteSchedule);
             AssignToBatchCommand = new RelayCommand(_ => AssignSelectedToBatch(), _ => SelectedSchedule != null);
             NavigateBackCommand = new RelayCommand(_ => OnNavigationRequested?.Invoke("Dashboard"));
+            StartRoastCommand = new RelayCommand(_ => StartRoastFromSchedule(), _ => SelectedSchedule != null);
+            CompleteRoastCommand = new RelayCommand(_ => CompleteSelectedRoast(), _ => SelectedSchedule != null);
 
             LoadSchedules();
         }
@@ -108,6 +112,42 @@ namespace CbcRoastersErp.ViewModels
             MessageBox.Show("Batch roast created from schedule.");
             _repository.DeleteSchedule(SelectedSchedule.ScheduleID);
             Schedules.Remove(SelectedSchedule);
+        }
+
+        private void StartRoastFromSchedule()
+        {
+            if (SelectedSchedule == null) return;
+
+            try
+            {
+                _repository.UpdateScheduleStatus(SelectedSchedule.ScheduleID, "In Progress");
+
+                string artisanPath = AppConfig.GetArtisanPath();
+                if (string.IsNullOrEmpty(artisanPath) || !System.IO.File.Exists(artisanPath))
+                {
+                    MessageBox.Show("Artisan executable path is not set or invalid. Please configure it in Settings.", "Missing Path", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                System.Diagnostics.Process.Start(artisanPath);
+
+                MessageBox.Show("Artisan launched and batch marked In Progress.", "Roast Started");
+
+                LoadSchedules();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start roast: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void CompleteSelectedRoast()
+        {
+            if (SelectedSchedule == null) return;
+
+            _repository.UpdateScheduleStatus(SelectedSchedule.ScheduleID, "Completed");
+            MessageBox.Show("Batch marked as completed.");
+            LoadSchedules();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
