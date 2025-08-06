@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using CbcRoastersErp.Helpers;
-using CbcRoastersErp.ViewModels;
 
 namespace CbcRoastersErp.Views
 {
@@ -25,6 +12,7 @@ namespace CbcRoastersErp.Views
         public Dashboard()
         {
             InitializeComponent();
+            Loaded += Dashboard_Loaded;
         }
 
         private void ThemeToggle_Click(object sender, RoutedEventArgs e)
@@ -32,5 +20,18 @@ namespace CbcRoastersErp.Views
             ThemeHelper.ToggleTheme();
         }
 
+        private void Dashboard_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Set initial theme based on user preference or system settings
+            if (ThemeHelper.IsDarkTheme())
+            {
+                ThemeHelper.SetDarkTheme();
+            }
+            else
+            {
+                ThemeHelper.SetLightTheme();
+            }
+
+        }
     }
 }

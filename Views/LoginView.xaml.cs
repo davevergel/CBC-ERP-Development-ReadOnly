@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CbcRoastersErp.Helpers;
 using CbcRoastersErp.ViewModels;
 
 namespace CbcRoastersErp.Views
@@ -25,6 +26,12 @@ namespace CbcRoastersErp.Views
         {
             InitializeComponent();
             DataContextChanged += LoginView_DataContextChanged;
+            Loaded += LoginView_Loaded;
+        }
+
+        private void LoginView_Loaded(object sender, RoutedEventArgs e)
+        {
+            ThemeHelper.SetLightTheme();
         }
 
         private void LoginView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
