@@ -5,56 +5,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CbcRoastersErp.Views.Administration.MasterData"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="{DynamicResource MaterialDesignPaper}"
+             Background="{DynamicResource BackgroundBrush}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer>
-            <StackPanel Margin="20" VerticalAlignment="Top">
-                <!-- Header -->
-                <TextBlock Text="Master Data"
-                       FontSize="28"
-                       FontWeight="Bold"
-                       Foreground="{DynamicResource PrimaryHueDarkBrush}"
-                       Margin="0 0 0 10"/>
+            <StackPanel Margin="30" VerticalAlignment="Top">
+
+                <!-- Header with logo -->
+                <DockPanel Margin="0 0 0 20">
+                    <Image Source="/Views/CBC_Logo_500x500.png"
+                           Width="50" Height="50"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           DockPanel.Dock="Left"/>
+                    <TextBlock Text="Master Data"
+                               Style="{StaticResource Heading1TextBlock}"
+                               VerticalAlignment="Center"
+                               Margin="20 0 0 0"/>
+                </DockPanel>
 
                 <!-- Back to Dashboard -->
                 <Button Content="Back to Dashboard"
-                Command="{Binding NavigateBackCommand}"
-                HorizontalAlignment="Left"
-                Width="150"
-                Margin="0,0,0,20"/>
-                <!-- Finished Goods-->
-                <GroupBox Header="Operations Master Data">
+                        Command="{Binding NavigateBackCommand}"
+                        Style="{StaticResource PrimaryButton}"
+                        Width="180"
+                        Margin="0 0 0 20"
+                        HorizontalAlignment="Left"/>
+
+                <!-- Operations Master Data -->
+                <GroupBox Header="Operations Master Data" Style="{StaticResource BrandedGroupBox}">
                     <WrapPanel Margin="10" ItemHeight="130" ItemWidth="250">
-                            <materialDesign:Card Margin="10">
-                            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToManageFinishedGoodsCommand}" Margin="0,39,0,38">
-                                <StackPanel Orientation="Vertical">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Cube" Margin="0 0 8 0"/>
-                                        <TextBlock Text="Finished Goods" FontSize="18" FontWeight="Bold"/>                                        
-                                    </StackPanel>
-                                    <TextBlock Text="Manage inventory items" Foreground="Gray"/>
-                                </StackPanel>
-                            </Button>
-                        </materialDesign:Card>
+
+                        <!-- Finished Goods -->
                         <materialDesign:Card Margin="10">
-                            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding NavigateToManageRoastingProfilesCommand}">
+                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding NavigateToManageFinishedGoodsCommand}">
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="CoffeeMaker" Margin="0 0 8 0"/>
-                                        <TextBlock Text="Roasting Profiles" FontSize="18" FontWeight="Bold"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                                        <materialDesign:PackIcon Kind="Cube" Width="24" Margin="0 0 8 0"/>
+                                        <TextBlock Text="Finished Goods" Style="{StaticResource Heading2TextBlock}"/>
                                     </StackPanel>
-                                    <TextBlock Text="Manage roasting profiles" Foreground="Gray"/>
+                                    <TextBlock Text="Manage inventory items" Style="{StaticResource CaptionTextBlock}"/>
                                 </StackPanel>
                             </Button>
                         </materialDesign:Card>
+
+                        <!-- Roasting Profiles -->
+                        <materialDesign:Card Margin="10">
+                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding NavigateToManageRoastingProfilesCommand}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                                        <materialDesign:PackIcon Kind="CoffeeMaker" Width="24" Margin="0 0 8 0"/>
+                                        <TextBlock Text="Roasting Profiles" Style="{StaticResource Heading2TextBlock}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Manage roasting profiles" Style="{StaticResource CaptionTextBlock}"/>
+                                </StackPanel>
+                            </Button>
+                        </materialDesign:Card>
+
                     </WrapPanel>
                 </GroupBox>
             </StackPanel>
-
         </ScrollViewer>
-        
-
     </Grid>
 </UserControl>

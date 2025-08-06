@@ -6,8 +6,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:CbcRoastersErp.Views.Administration.MasterData.RoastingProfilesViews"
              xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels.Administration.MasterData.RoastingProfilesViewModels"
+             Background="{DynamicResource BackgroundBrush}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="700" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:ManageRoastingProfilesViewModel/>
     </UserControl.DataContext>
@@ -33,12 +34,22 @@
 
             <materialDesign:Card Padding="20" Margin="10">
                 <StackPanel Margin="0,0,0,2">
-                    <!-- Title -->
-                    <TextBlock Text="Roasting Profiles"
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <!-- Logo -->
+                        <Image Source="/Views/CBC_Logo_500x500.png"
+                           Width="50" Height="50"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           DockPanel.Dock="Left"/>
+                        <!-- Title -->
+                        <TextBlock Text="Roasting Profiles"
                                FontSize="22"
                                FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryHueDarkBrush}"
-                               Margin="0 0 0 20"/>
+                               Style="{StaticResource Heading1TextBlock}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="30 0 0 0"/>
+                    </StackPanel>
 
                     <!-- Data Table -->
                     <DataGrid ItemsSource="{Binding RoastingProfiles}"
@@ -48,7 +59,7 @@
                               RowHeight="40"
                               HeadersVisibility="Column"
                               SelectionMode="Single"
-                              Style="{StaticResource MaterialDesignDataGrid}"
+                              Style="{StaticResource BrandDataGrid}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ScrollViewer.HorizontalScrollBarVisibility="Auto"
                               CanUserReorderColumns="True"
@@ -69,12 +80,14 @@
                     <!-- Pagination -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="0,20,0,0" >
                         <Button Content="Previous" Command="{Binding PageChangedCommand}"
-                            CommandParameter="Previous"
-                            IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}" />
+                                CommandParameter="Previous"
+                                Style="{StaticResource SecondaryButton}"
+                                IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}" />
                         <TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center" Padding="10" FontWeight="SemiBold"/>
                         <TextBlock Text="of" VerticalAlignment="Center" Margin="5,0" />
                         <TextBlock Text="{Binding TotalPages}" VerticalAlignment="Center" FontWeight="SemiBold" Padding="10"/>
                         <Button Content="Next"
+                                Style="{StaticResource SecondaryButton}"
                                 Command="{Binding PageChangedCommand}" CommandParameter="Next">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}"
@@ -88,11 +101,11 @@
 
                     <!-- Action Buttons -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Add/Edit" Command="{Binding AddEditRoastingProfileCommand}" 
+                        <Button Content="Add/Edit" Style="{StaticResource SecondaryButton}" Command="{Binding AddEditRoastingProfileCommand}" 
                         Margin="10" Padding="20,6"/>
                         <Button Content="Delete" Command="{Binding DeleteRoastingProfileCommand }" 
                         Margin="10" Padding="20,6" Background="Red" Foreground="White"/>
-                        <Button Content="Back to Dashboard" Command="{Binding NavigateBackCommand}" 
+                        <Button Content="Back to Dashboard" Style="{StaticResource SecondaryButton}" Command="{Binding NavigateBackCommand}" 
                         Margin="10" Padding="20,6"/>
                     </StackPanel>
                 </StackPanel>

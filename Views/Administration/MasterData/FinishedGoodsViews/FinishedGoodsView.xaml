@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CbcRoastersErp.Views.Administration.MasterData.FinishedGoods"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="{DynamicResource BackgroundBrush}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="900" d:DesignWidth="800">
 
     <materialDesign:DialogHost Identifier="RootDialog">
         <Grid Margin="20">
@@ -29,12 +30,17 @@
 
             <materialDesign:Card Padding="20" Margin="10">
                 <StackPanel Margin="0,0,0,2">
-                    <!-- Title -->
-                    <TextBlock Text="Finished Goods"
-                       FontSize="22"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryHueDarkBrush}"
-                       Margin="0 0 0 20"/>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Views/CBC_Logo_500x500.png"
+                               Width="50" Height="50"
+                               Stretch="Uniform"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               DockPanel.Dock="Left"/>
+                        <!-- Title -->
+                        <TextBlock Text="Finished Goods"
+                                   Style="{StaticResource Heading1TextBlock}"
+                                   Margin="0 0 0 20"/>
+                    </StackPanel>
 
                     <!-- Data Table -->
                     <DataGrid ItemsSource="{Binding FinishedGoods}"
@@ -59,18 +65,25 @@
                     </DataGrid>
 
                     <!-- Pagination -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="0,20,0,0" >
-                        <Button Content="Previous" Command="{Binding PageChangedCommand}"
-                            CommandParameter="Previous"
-                            IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,10">
+                        <Button Content="Previous"
+                                Command="{Binding PageChangedCommand}"
+                                CommandParameter="Previous"
+                                Style="{StaticResource SecondaryButton}"
+                                Margin="5"
+                                IsEnabled="{Binding CurrentPage, Converter={StaticResource IsGreaterThanOneConverter}}"/>
+
                         <TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center" Padding="10" FontWeight="SemiBold"/>
-                        <TextBlock Text="of" VerticalAlignment="Center" Margin="5,0" />
-                        <TextBlock Text="{Binding TotalPages}" VerticalAlignment="Center" FontWeight="SemiBold" Padding="10"/>
+                        <TextBlock Text="of" VerticalAlignment="Center" Margin="5,0"/>
+                        <TextBlock Text="{Binding TotalPages}" VerticalAlignment="Center" Padding="10" FontWeight="SemiBold"/>
+
                         <Button Content="Next"
-                                Command="{Binding PageChangedCommand}" CommandParameter="Next">
-                                        <Button.IsEnabled>
-                                            <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}"
->
+                                Command="{Binding PageChangedCommand}"
+                                CommandParameter="Next"
+                                Style="{StaticResource SecondaryButton}"
+                                Margin="5">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource IsLessThanTotalPagesConverter}">
                                     <Binding Path="CurrentPage"/>
                                     <Binding Path="TotalPages"/>
                                 </MultiBinding>
@@ -79,19 +92,25 @@
                     </StackPanel>
 
                     <!-- Action Buttons -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Add/Edit" Command="{Binding OpenAddEditFinishedGoodsCommand}" 
-                        Margin="10" Padding="20,6"/>
-                        <Button Content="Delete" Command="{Binding DeleteFinishedGoodCommand }" 
-                        Margin="10" Padding="20,6" Background="Red" Foreground="White"/>
-                        <Button Content="Back to Dashboard" Command="{Binding NavigateBackCommand}" 
-                        Margin="10" Padding="20,6"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="Add/Edit"
+                                Command="{Binding OpenAddEditFinishedGoodsCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                Margin="10" Padding="20,6"/>
+
+                        <Button Content="Delete"
+                                Command="{Binding DeleteFinishedGoodCommand}"
+                                Background="Red"
+                                Foreground="White"
+                                Margin="10" Padding="20,6"/>
+
+                        <Button Content="Back to Dashboard"
+                                Command="{Binding NavigateBackCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                Margin="10" Padding="20,6"/>
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
         </Grid>
     </materialDesign:DialogHost>
-
-
-
 </UserControl>
