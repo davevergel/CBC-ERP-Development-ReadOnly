@@ -16,6 +16,9 @@ using CbcRoastersErp.Views.Operations;
 using CbcRoastersErp.ViewModels.Operations.Planning;
 using CbcRoastersErp.Views.Operations.Planning;
 using CbcRoastersErp.Views.Administration.MasterData.FinishedGoods;
+using CbcRoastersErp.ViewModels.Inventory;
+using MaterialDesignThemes.Wpf;
+using CbcRoastersErp.Views.Operations.Inventory;
 
 namespace CbcRoastersErp.Factories
 {
@@ -39,6 +42,8 @@ namespace CbcRoastersErp.Factories
                 { typeof(PurchaseOrderEditViewModel), vm => new PurchaseOrderEditView { DataContext = vm } },
                 { typeof(AddEditFarmersMarketProductionScheduleItemViewModel), vm => new AddEditFarmersMarketProductionScheduleItemView { DataContext = vm } },
                 { typeof(AddEditFarmersMarketScheduleViewModel), vm => new AddEditFarmersMarketScheduleView { DataContext = vm } },
+                // Stock Take}
+                { typeof(StockTakeViewModel), vm => new StockTakeView { DataContext = vm} },
 
 
                 // HR

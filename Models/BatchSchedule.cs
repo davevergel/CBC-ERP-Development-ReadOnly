@@ -10,6 +10,7 @@ namespace CbcRoastersErp.Models
     {
         public int ScheduleID { get; set; }
         public int OrderID { get; set; } // Links to BigCommerce order.
+        public int BigCommerceID { get; set; } //BigCommerce Order Number
         public int FinishedGoodID { get; set; } // Links to FinishedGoods
         public string FinishedGoodName { get; set; } // For display purposes
         public int Quantity { get; set; }

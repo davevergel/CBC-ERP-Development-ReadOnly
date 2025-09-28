@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Windows.Controls;
 using CbcRoastersErp.Helpers;
-using CbcRoastersErp.Models;
-using CbcRoastersErp.Services.Finance;
 using CbcRoastersErp.ViewModels;
 using CbcRoastersErp.ViewModels.Administration.MasterData;
 using CbcRoastersErp.ViewModels.Administration.MasterData.RoastingProfilesViewModels;
@@ -11,6 +8,8 @@ using CbcRoastersErp.ViewModels.Finance;
 using CbcRoastersErp.ViewModels.HR;
 using CbcRoastersErp.ViewModels.Operations.Planning;
 using CbcRoastersErp.ViewModels.Purchasing;
+using CbcRoastersErp.ViewModels.Reporting;
+using CbcRoastersErp.ViewModels.OrderManagement;
 using CbcRoastersErp.Views;
 using CbcRoastersErp.Views.Administration.MasterData;
 using CbcRoastersErp.Views.Administration.MasterData.FinishedGoods;
@@ -19,7 +18,9 @@ using CbcRoastersErp.Views.Finance;
 using CbcRoastersErp.Views.HR;
 using CbcRoastersErp.Views.Operations;
 using CbcRoastersErp.Views.Operations.Planning;
+using CbcRoastersErp.Views.OrderManagement;
 using CbcRoastersErp.Views.Purchasing;
+using CbcRoastersErp.Views.Reporting;
 
 namespace CbcRoastersErp.Factories
 {
@@ -49,6 +50,7 @@ namespace CbcRoastersErp.Factories
                 { "Employee", () => {
                     var vm = new EmployeeViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
                     return new EmployeeView { DataContext = vm };
                 }},
                 { "PurchaseOrder", () => {
@@ -81,6 +83,20 @@ namespace CbcRoastersErp.Factories
                     vm.OnOpenAddEditView += main.HandleOpenAddEditView;
                     return new BatchScheduleView { DataContext = vm };
                 }},
+                { "InventoryReport", () => {
+                    try
+                    {
+                        var vm = new InventoryReportViewModel();
+                        vm.OnNavigationRequested += main.HandleNavigation;
+                        return new InventoryReportView { DataContext = vm };
+                    }
+                    catch (Exception ex)
+                    {
+                        ApplicationLogger.Log(ex,nameof(ViewFactoryRegistry), nameof(DictionaryBase));
+                        return new UserControl(); // return empty to avoid crash
+                    }
+                }},
+
                 // HR
                 { "HR_Employee", () => {
                     var vm = new HrEmployeeViewModel();
@@ -103,6 +119,7 @@ namespace CbcRoastersErp.Factories
                 { "UserManagement", () => {
                     var vm = new UserManagementViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
+                    vm.OnOpenAddEditView += main.HandleOpenAddEditView;
                     return new UserManagementView { DataContext = vm };
                 }},
                 { "ManagePermissions", () => {
@@ -156,9 +173,17 @@ namespace CbcRoastersErp.Factories
                     return new InterviewView { DataContext = vm };
                 }},
                 { "BigCommerceSync", () => {
+                    try
+                    {
                     var vm = new BigCommerceSyncViewModel();
                     vm.OnNavigationRequested += main.HandleNavigation;
                     return new BigCommerceSyncView { DataContext = vm };
+                    }
+                    catch(Exception ex)
+                    {
+                        ApplicationLogger.Log(ex,nameof(ViewFactoryRegistry), nameof(DictionaryBase));
+                        return new UserControl(); // return empty to avoid crash
+                    }
                 }},
                 { "BigCommerceOrders", () => {
                     var vm = new BigCommerceOrdersViewModel();

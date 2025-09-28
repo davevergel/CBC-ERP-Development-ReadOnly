@@ -18,6 +18,8 @@ namespace CbcRoastersErp.Factories
             vm.NavigateToArtisanCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("ArtisanRoastProfiles"));
             vm.NavigateToFarmersMarketCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("FarmersMarketProductionSchedule"));
 
+            // Reporting
+            vm.NavigateToInventoryReportCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("InventoryReport"));
 
             // User Management
             vm.NavigateToUserManagementCommand = new RelayCommand(_ => vm.OnNavigationRequested?.Invoke("UserManagement"));
