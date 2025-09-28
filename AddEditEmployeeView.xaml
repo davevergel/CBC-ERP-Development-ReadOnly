@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="CbcRoastersErp.Views.AddEditEmployeeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CbcRoastersErp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Full Name"/>
+            <TextBox Text="{Binding Employee.FullName}" Width="300"/>
+
+            <TextBlock Text="Position"/>
+            <TextBox Text="{Binding Employee.Position}" Width="300"/>
+
+            <TextBlock Text="Email"/>
+            <TextBox Text="{Binding Employee.Email}" Width="300"/>
+
+            <TextBlock Text="Phone Number"/>
+            <TextBox Text="{Binding Employee.PhoneNumber}" Width="300"/>
+
+            <TextBlock Text="Date Hired"/>
+            <DatePicker SelectedDate="{Binding Employee.DateHired}" Width="300"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="10"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
