@@ -37,6 +37,10 @@
                              materialDesign:HintAssist.Hint="Order ID"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
+                    <TextBox Text="{Binding Schedule.BigCommerceID}"
+                               materialDesign:HintAssist.Hint="BigCommerce Order Number"
+                               Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+
                     <ComboBox ItemsSource="{Binding FinishedGoodsList}"
                               SelectedValue="{Binding Schedule.FinishedGoodID, Mode=TwoWay}"
                               SelectedValuePath="FinishedGoodID"

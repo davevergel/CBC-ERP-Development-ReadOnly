@@ -68,11 +68,12 @@
                       IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Schedule ID" Binding="{Binding ScheduleID}" />
-                    <DataGridTextColumn Header="Order ID" Binding="{Binding OrderID}" />
+                    <DataGridTextColumn Header="Order ID" Binding="{Binding BigCommerceID}" />
                     <DataGridTextColumn Header="Product Name" Binding="{Binding FinishedGoodName}" />
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
                     <DataGridTextColumn Header="Scheduled Date" Binding="{Binding ScheduledDate, StringFormat={}{0:MM/dd/yyyy}}" />
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

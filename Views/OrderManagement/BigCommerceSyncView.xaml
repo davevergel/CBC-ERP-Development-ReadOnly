@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CbcRoastersErp.Views.BigCommerceSyncView"
+﻿<UserControl x:Class="CbcRoastersErp.Views.OrderManagement.BigCommerceSyncView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
              mc:Ignorable="d"
              Background="{DynamicResource BackgroundBrush}"
-             xmlns:vm="clr-namespace:CbcRoastersErp.ViewModels"
-             xmlns:models="clr-namespace:CbcRoastersErp.Models"
              Padding="20">
 
     <Grid>
@@ -49,7 +47,7 @@
         <TabControl Grid.Row="2" Style="{StaticResource BrandTabControl}" Margin="0 0 0 20">
 
             <!-- Customers Tab -->
-            <TabItem Style="{StaticResource BrandedTabItem}" Header="Customers">
+            <TabItem Style="{StaticResource BrandedTabItem}" Header="Customers" Width="100">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -82,7 +80,7 @@
             </TabItem>
 
             <!-- Orders Tab -->
-            <TabItem Style="{StaticResource BrandedTabItem}" Header="Orders" Padding="10">
+            <TabItem Style="{StaticResource BrandedTabItem}" Header="Orders" Padding="10" Width="100">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

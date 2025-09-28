@@ -55,8 +55,9 @@
                 <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Top">
                     <Button Content="Back to Dashboard"
                             Command="{Binding NavigateBackCommand}"
-                            Style="{StaticResource SecondaryButton}"
+                            Style="{StaticResource PrimaryButton}"
                             HorizontalAlignment="Left"
+                            Height="40"
                             Margin="0,0,0,10"/>
                     <TabControl Style="{StaticResource BrandTabControl}">
                         <TabItem Style="{StaticResource BrandedTabItem}" Header="Batch Roasting">
@@ -65,17 +66,24 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Button Content="Add/Edit Batch"
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Start Roast"
+                                        Command="{Binding StartRoastCommand}"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Width="150" />
+                                    <Button Content="Complete Roast"
+                                            Command="{Binding CompleteRoastCommand}"
+                                            Style="{StaticResource PrimaryButton}"
+                                            Margin="5"/>
+                                    <Button Content="Add/Edit Batch"
                                         Command="{Binding OpenAddEditBatchCommand}"
                                         Style="{StaticResource PrimaryButton}"
-                                         Margin="0,0,170,0"
-                                        HorizontalAlignment="Right"
                                         Width="150"/>
                                 <Button Content="Delete Batch" 
                                         Command="{Binding DeleteBatchCommand}"
                                         Style="{StaticResource PrimaryButton}"
-                                        HorizontalAlignment="Right"
-                                        Width="150" Margin="10,0,10,0" />
+                                        Width="150" />
+                                </StackPanel>
                                 <DataGrid Style="{StaticResource BrandDataGrid}" ItemsSource="{Binding RoastBatches}"
                                           SelectedItem="{Binding SelectedBatch}"
                                           AutoGenerateColumns="False"
@@ -84,6 +92,8 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Batch 10#" Binding="{Binding BatchNumber}" />
                                         <DataGridTextColumn Header="Roast Date" Binding="{Binding RoastDate}" />
+                                        <DataGridTextColumn Header="Order Number" Binding="{Binding BigCommerceID}" />
+                                        <DataGridTextColumn Header="Roast Status" Binding="{Binding Status}" />
                                         <DataGridTextColumn Header="Batch Size" Binding="{Binding BatchSize}" />
                                         <DataGridTextColumn Header="Finished Good" Binding="{Binding FinishedGoodName}" />
                                         <DataGridTextColumn Header="Roast Profile" Binding="{Binding ProfileName}" />
