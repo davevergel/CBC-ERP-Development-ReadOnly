@@ -20,7 +20,7 @@ namespace CbcRoastersErp.Repositories
             {
                 string sql = @"
                             SELECT 
-                                b.BatchID, b.RoastDate, b.ProductionDate, b.BatchNumber, b.BatchSize,
+                                b.BatchID, b.RoastDate, b.Status, b.ProductionDate, b.BatchNumber, b.BatchSize,
                                 b.ProfileID, b.FinishedGoodID, b.RoastLevel,
                                 rp.ProfileName,
                                 fg.ProductName AS FinishedGoodName
@@ -34,6 +34,7 @@ namespace CbcRoastersErp.Repositories
                 {
                     BatchID = row.BatchID,
                     RoastDate = row.RoastDate is MySqlConnector.MySqlDateTime dt && dt.IsValidDateTime ? dt.GetDateTime() : null,
+                    Status = row.Status,
                     ProductionDate = row.ProductionDate is MySqlConnector.MySqlDateTime pd && pd.IsValidDateTime ? pd.GetDateTime() : null,
                     BatchNumber = row.BatchNumber,
                     BatchSize = row.BatchSize,
@@ -69,7 +70,7 @@ namespace CbcRoastersErp.Repositories
         {
             const string sql = @"
         SELECT 
-            b.BatchID, b.RoastDate, b.ProductionDate, b.BatchNumber, b.BatchSize,
+            b.BatchID, b.RoastDate, b.Status, b.ProductionDate, b.BatchNumber, b.BatchSize,
             b.ProfileID, b.FinishedGoodID,
             b.RoastLevel,
             rp.ProfileName,
@@ -82,6 +83,7 @@ namespace CbcRoastersErp.Repositories
             {
                 BatchID = row.BatchID,
                 RoastDate = row.RoastDate is MySqlConnector.MySqlDateTime dt && dt.IsValidDateTime ? dt.GetDateTime() : null,
+                Status = row.Status,
                 ProductionDate = row.ProductionDate is MySqlConnector.MySqlDateTime pd && pd.IsValidDateTime ? pd.GetDateTime() : null,
                 BatchNumber = row.BatchNumber,
                 BatchSize = row.BatchSize,
@@ -91,12 +93,12 @@ namespace CbcRoastersErp.Repositories
                 FinishedGoodName = row.FinishedGoodName
             });
         }
-
+        // Batch Roasting ===============================================================================================================
         public BatchRoasting? GetRoastBatchById(int batchId)
         {
             const string sql = @"
         SELECT 
-            b.BatchID, b.RoastDate, b.ProductionDate, b.BatchNumber, b.BatchSize,
+            b.BatchID, b.RoastDate, b.Status, b.ProductionDate, b.BatchNumber, b.BatchSize,
             b.ProfileID, b.FinishedGoodID, b.RoastLevel,
             rp.ProfileName,
             fg.ProductName AS FinishedGoodName
@@ -111,6 +113,7 @@ namespace CbcRoastersErp.Repositories
             {
                 BatchID = row.BatchID,
                 RoastDate = row.RoastDate is MySqlConnector.MySqlDateTime dt && dt.IsValidDateTime ? dt.GetDateTime() : null,
+                Status = row.Status,
                 ProductionDate = row.ProductionDate is MySqlConnector.MySqlDateTime pd && pd.IsValidDateTime ? pd.GetDateTime() : null,
                 BatchNumber = row.BatchNumber,
                 BatchSize = row.BatchSize,
@@ -124,26 +127,30 @@ namespace CbcRoastersErp.Repositories
 
         public void AddRoastBatch(BatchRoasting batch)
         {
-            string query = @"INSERT INTO BatchRoasting (RoastDate, ProductionDate, BatchNumber, BatchSize, ProfileID, FinishedGoodID) 
-                 VALUES (@RoastDate, @ProductionDate, @BatchNumber, @BatchSize, @ProfileID, @FinishedGoodID);
+            string query = @"INSERT INTO BatchRoasting (RoastDate, Status, ProductionDate, BatchNumber, BatchSize, ProfileID, FinishedGoodID) 
+                 VALUES (@RoastDate, @Status, @ProductionDate, @BatchNumber, @BatchSize, @ProfileID, @FinishedGoodID);
                  SELECT LAST_INSERT_ID();"; // fetch last inserted BatchID
 
             batch.RoastDate ??= DateTime.Now;
+            batch.Status ??= "Pending";
             batch.ProductionDate ??= DateTime.Now;
             batch.BatchNumber ??= $"B-{DateTime.Now:yyyyMMddHHmmss}";
 
             // Capture the new BatchID
             batch.BatchID = _db.ExecuteScalar<int>(query, new
             {
-                RoastDate = batch.RoastDate?.ToString("yyyy-MM-dd HH:mm:ss"),
+                RoastDate = batch.RoastDate?.ToString("yyyy-MM-dd HH:mm:ss"),                
                 ProductionDate = batch.ProductionDate?.ToString("yyyy-MM-dd HH:mm:ss"),
+                batch.Status,
                 batch.BatchNumber,
                 batch.BatchSize,
                 batch.ProfileID,
                 batch.FinishedGoodID
             });
 
-            // Update FinishedGoods stock
+
+
+            // Update FinishedGoods stock 
             string updateStock = "UPDATE FinishedGoods SET StockLevel = StockLevel + @Qty WHERE FinishedGoodID = @ID";
             _db.Execute(updateStock, new { Qty = batch.BatchSize, ID = batch.FinishedGoodID });
 
@@ -159,6 +166,24 @@ namespace CbcRoastersErp.Repositories
 
             // 🔗 Insert into FinishedGoodInventory
             AddFinishedGoodInventory(batch);
+        }
+
+        public void UpdateRoastBatchStatus(int batchId, string status)
+        {
+            try
+            {
+                const string query = @"
+            UPDATE BatchRoasting
+            SET Status = @Status
+            WHERE BatchID = @BatchID";
+
+                _db.Execute(query, new { BatchID = batchId, Status = status });
+                ApplicationLogger.LogInfo($"Updated roast batch status: BatchID={batchId}, Status={status}", "System", "Info");
+            }
+            catch (Exception ex)
+            {
+                ApplicationLogger.Log(ex, "System", "Error");
+            }
         }
 
 

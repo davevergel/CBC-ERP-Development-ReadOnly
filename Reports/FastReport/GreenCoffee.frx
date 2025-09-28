@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="2025-09-10T04:52:24.898649" ReportInfo.Modified="2025-09-10T04:52:24.898649" ReportInfo.Name="Green Coffee Inventory Report">
+  <Dictionary>
+    <TableDataSource Name="ReportData" ReferenceName="ReportData" DataType="System.Collections.Generic.List`1" Enabled="true">
+      <Column Name="CoffeeName" DataType="System.String" /><Column Name="Origin" DataType="System.String" /><Column Name="Variety" DataType="System.String" /><Column Name="ProcessType" DataType="System.String" /><Column Name="Quantity" DataType="System.String" /><Column Name="StockLevel" DataType="System.String" /><Column Name="SupplierName" DataType="System.String" /><Column Name="DateReceived" DataType="System.String" /><Column Name="Price" DataType="System.String" />
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="30">
+      <TextObject Name="TitleText" Width="718.2" Height="30" Text="Green Coffee Inventory Report" HorzAlign="Center" Font="Arial,14pt,Bold" />
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="20">
+      
+        <TextObject Name="Header0" Width="100" Height="20" Left="0" Text="CoffeeName" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header1" Width="100" Height="20" Left="100" Text="Origin" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header2" Width="100" Height="20" Left="200" Text="Variety" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header3" Width="100" Height="20" Left="300" Text="ProcessType" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header4" Width="100" Height="20" Left="400" Text="Quantity" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header5" Width="100" Height="20" Left="500" Text="StockLevel" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header6" Width="100" Height="20" Left="600" Text="SupplierName" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header7" Width="100" Height="20" Left="700" Text="DateReceived" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+        <TextObject Name="Header8" Width="100" Height="20" Left="800" Text="Price" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" Font="Arial,10pt,Bold" />
+    </PageHeaderBand>
+    <DataBand Name="DataBand1" Width="718.2" Height="20" DataSource="ReportData">
+      
+        <TextObject Name="DataText0" Width="100" Height="20" Left="0" Text="{{ReportData.CoffeeName}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText1" Width="100" Height="20" Left="100" Text="{{ReportData.Origin}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText2" Width="100" Height="20" Left="200" Text="{{ReportData.Variety}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText3" Width="100" Height="20" Left="300" Text="{{ReportData.ProcessType}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText4" Width="100" Height="20" Left="400" Text="{{ReportData.Quantity}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText5" Width="100" Height="20" Left="500" Text="{{ReportData.StockLevel}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText6" Width="100" Height="20" Left="600" Text="{{ReportData.SupplierName}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText7" Width="100" Height="20" Left="700" Text="{{ReportData.DateReceived}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+        <TextObject Name="DataText8" Width="100" Height="20" Left="800" Text="{{ReportData.Price}}" 
+                    Border.Lines="All" VertAlign="Center" HorzAlign="Center" />
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -516,5 +516,66 @@ namespace CbcRoastersErp.Repositories
             }
         }
 
+        public void RecordStockTake(string itemType, int itemId, int countedQuantity, int recordedQuantity, string userName)
+        {
+            try
+            {
+                string query = @"INSERT INTO StockTakes (ItemType, ItemID, CountedQuantity, RecordedQuantity, Difference, UserName)
+                         VALUES (@ItemType, @ItemID, @CountedQuantity, @RecordedQuantity, @Difference, @UserName)";
+                _db.Execute(query, new
+                {
+                    ItemType = itemType,
+                    ItemID = itemId,
+                    CountedQuantity = countedQuantity,
+                    RecordedQuantity = recordedQuantity,
+                    Difference = countedQuantity - recordedQuantity,
+                    UserName = userName
+                });
+
+                // Optionally update the stock level immediately
+                // Update the correct table based on ItemType
+                switch (itemType)
+                {
+                    case "GreenCoffee":
+                        _db.Execute("UPDATE GreenCoffeeInventory SET StockLevel = @CountedQuantity WHERE GreenCoffeeID = @ItemID",
+                            new { CountedQuantity = countedQuantity, ItemID = itemId });
+                        break;
+
+                    case "Tea":
+                        _db.Execute("UPDATE TeaInventory SET StockLevel = @CountedQuantity WHERE TeaID = @ItemID",
+                            new { CountedQuantity = countedQuantity, ItemID = itemId });
+                        break;
+
+                    case "PackingMaterial":
+                        _db.Execute("UPDATE PackingMaterials SET StockLevel = @CountedQuantity WHERE MaterialID = @ItemID",
+                            new { CountedQuantity = countedQuantity, ItemID = itemId });
+                        break;
+
+                    case "FinishedGood":
+                        _db.Execute("UPDATE FinishedGoods SET StockLevel = @CountedQuantity WHERE FinishedGoodID = @ItemID",
+                            new { CountedQuantity = countedQuantity, ItemID = itemId });
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationLogger.Log(ex, nameof(RecordStockTake), nameof(InventoryRepository), Environment.UserName);
+                throw;
+            }
+        }
+
+        public IEnumerable<string> GetLowInventoryAlerts()
+        {
+            var alerts = new List<string>();
+
+            alerts.AddRange(_db.Query<string>("SELECT CoffeeName FROM GreenCoffeeInventory WHERE StockLevel <= ReorderLevel"));
+            alerts.AddRange(_db.Query<string>("SELECT TeaName FROM TeaInventory WHERE StockLevel <= ReorderLevel"));
+            alerts.AddRange(_db.Query<string>("SELECT MaterialName FROM PackingMaterials WHERE StockLevel <= ReorderLevel"));
+            alerts.AddRange(_db.Query<string>("SELECT ProductName FROM FinishedGoods WHERE StockLevel <= ReorderLevel"));
+
+            return alerts;
+        }
+
+
     }
 }

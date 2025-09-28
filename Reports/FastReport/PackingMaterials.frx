@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="s" ReportInfo.Modified="s" ReportInfo.Author="CBC Roasters">
+  <Dictionary>
+    <TableDataSource Name="ReportData" ReferenceName="ReportData" Enabled="true">
+      <Column Name="MaterialName" DataType="System.String"/><Column Name="StockLevel" DataType="System.String"/><Column Name="Unit" DataType="System.String"/><Column Name="LastUpdated" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="TitleText" Width="718.2" Height="37.8" Text="Packing Materials Inventory" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </ReportTitleBand>
+
+    <ColumnHeaderBand Name="ColumnHeader1" Width="718.2" Height="18.9">
+      <TextObject Name="HeaderMaterialName" Left="0" Top="0" Width="100" Height="18.9" Text="MaterialName" HorzAlign="Center" Font="Arial, 10pt, style=Bold" Fill.Color="LightGray"/><TextObject Name="HeaderStockLevel" Left="100" Top="0" Width="100" Height="18.9" Text="StockLevel" HorzAlign="Center" Font="Arial, 10pt, style=Bold" Fill.Color="LightGray"/><TextObject Name="HeaderUnit" Left="200" Top="0" Width="100" Height="18.9" Text="Unit" HorzAlign="Center" Font="Arial, 10pt, style=Bold" Fill.Color="LightGray"/><TextObject Name="HeaderLastUpdated" Left="300" Top="0" Width="100" Height="18.9" Text="LastUpdated" HorzAlign="Center" Font="Arial, 10pt, style=Bold" Fill.Color="LightGray"/>
+    </ColumnHeaderBand>
+
+    <DataBand Name="Data1" Width="718.2" Height="18.9" DataSource="ReportData">
+      <TextObject Name="TextMaterialName" Left="0" Top="0" Width="100" Height="18.9" Text="[ReportData.MaterialName]" /><TextObject Name="TextStockLevel" Left="100" Top="0" Width="100" Height="18.9" Text="[ReportData.StockLevel]" /><TextObject Name="TextUnit" Left="200" Top="0" Width="100" Height="18.9" Text="[ReportData.Unit]" /><TextObject Name="TextLastUpdated" Left="300" Top="0" Width="100" Height="18.9" Text="[ReportData.LastUpdated]" />
+    </DataBand>
+
+    
+        <ReportSummaryBand Name="Summary1" Width="718.2" Height="18.9">
+          <TextObject Name="TotalLabel" Left="0" Width="200" Height="18.9" Text="Total StockLevel:" Font="Arial, 10pt, style=Bold"/>
+          <TextObject Name="TotalValue" Left="200" Width="100" Height="18.9" Text="[Sum(ReportData.StockLevel)]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+        </ReportSummaryBand>
+        
+  </ReportPage>
+</Report>

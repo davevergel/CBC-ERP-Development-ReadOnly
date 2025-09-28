@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StiReport Created="2025-09-05T03:51:07.600874" EngineVersion="EngineV2" ScriptLanguage="CSharp">
+  <Dictionary>
+    <DataSources>
+      <StiDataTableSource Name="ReportData" Alias="ReportData">
+        <StiDataColumn Name="BatchNumber" />
+<StiDataColumn Name="ProductName" />
+<StiDataColumn Name="RoastLevel" />
+<StiDataColumn Name="QuantityProduced" />
+<StiDataColumn Name="DateProduced" />
+
+      </StiDataTableSource>
+    </DataSources>
+  </Dictionary>
+  <Pages>
+    <StiPage Name="Page1" Title="Finished Goods Inventory" PaperSize="A4">
+      <Components>
+        <StiHeaderBand Name="HeaderBand" Height="20">
+          <StiText Name="Header0" Width="100" Height="20" Text="BatchNumber" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header1" Width="100" Height="20" Text="ProductName" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header2" Width="100" Height="20" Text="RoastLevel" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header3" Width="100" Height="20" Text="QuantityProduced" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header4" Width="100" Height="20" Text="DateProduced" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+        </StiHeaderBand>
+        <StiDataBand Name="DataBand" DataSourceName="ReportData" Height="20">
+          
+        <StiText Name="Text0" Width="100" Height="20" Text="[ReportData.BatchNumber]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text1" Width="100" Height="20" Text="[ReportData.ProductName]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text2" Width="100" Height="20" Text="[ReportData.RoastLevel]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text3" Width="100" Height="20" Text="[ReportData.QuantityProduced]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text4" Width="100" Height="20" Text="[ReportData.DateProduced]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        </StiDataBand>
+        <StiFooterBand Name="FooterBand" Height="40">
+          
+        <StiText Name="TotalLabel" Top="30" Width="200" Height="20" Text="Total QuantityProduced:" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        <StiText Name="TotalValue" Left="200" Top="30" Width="100" Height="20" Text="{Sum(ReportData.QuantityProduced)}" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        
+        </StiFooterBand>
+      </Components>
+    </StiPage>
+  </Pages>
+</StiReport>

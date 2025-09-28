@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StiReport Created="2025-09-05T03:51:07.602108" EngineVersion="EngineV2" ScriptLanguage="CSharp">
+  <Dictionary>
+    <DataSources>
+      <StiDataTableSource Name="ReportData" Alias="ReportData">
+        <StiDataColumn Name="TeaName" />
+<StiDataColumn Name="TeaType" />
+<StiDataColumn Name="Origin" />
+<StiDataColumn Name="Certifications" />
+<StiDataColumn Name="StockLevel" />
+<StiDataColumn Name="DateReceived" />
+<StiDataColumn Name="Price" />
+
+      </StiDataTableSource>
+    </DataSources>
+  </Dictionary>
+  <Pages>
+    <StiPage Name="Page1" Title="Tea Inventory" PaperSize="A4">
+      <Components>
+        <StiHeaderBand Name="HeaderBand" Height="20">
+          <StiText Name="Header0" Width="100" Height="20" Text="TeaName" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header1" Width="100" Height="20" Text="TeaType" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header2" Width="100" Height="20" Text="Origin" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header3" Width="100" Height="20" Text="Certifications" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header4" Width="100" Height="20" Text="StockLevel" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header5" Width="100" Height="20" Text="DateReceived" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" /><StiText Name="Header6" Width="100" Height="20" Text="Price" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+        </StiHeaderBand>
+        <StiDataBand Name="DataBand" DataSourceName="ReportData" Height="20">
+          
+        <StiText Name="Text0" Width="100" Height="20" Text="[ReportData.TeaName]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text1" Width="100" Height="20" Text="[ReportData.TeaType]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text2" Width="100" Height="20" Text="[ReportData.Origin]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text3" Width="100" Height="20" Text="[ReportData.Certifications]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text4" Width="100" Height="20" Text="[ReportData.StockLevel]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text5" Width="100" Height="20" Text="[ReportData.DateReceived]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        <StiText Name="Text6" Width="100" Height="20" Text="[ReportData.Price]" HorAlignment="Center" VertAlignment="Center" Border="1" />
+        
+        </StiDataBand>
+        <StiFooterBand Name="FooterBand" Height="40">
+          
+        <StiText Name="TotalLabel" Top="30" Width="200" Height="20" Text="Total StockLevel:" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        <StiText Name="TotalValue" Left="200" Top="30" Width="100" Height="20" Text="{Sum(ReportData.StockLevel)}" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        
+        </StiFooterBand>
+      </Components>
+    </StiPage>
+  </Pages>
+</StiReport>

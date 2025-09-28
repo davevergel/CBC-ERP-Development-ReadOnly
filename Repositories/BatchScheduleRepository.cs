@@ -41,8 +41,8 @@ namespace CbcRoastersErp.Repositories
             try
             {
                 const string query = @"
-                INSERT INTO BatchSchedule (OrderID, FinishedGoodID, Quantity, ScheduledDate, Status, Notes)
-                VALUES (@OrderID, @FinishedGoodID, @Quantity, @ScheduledDate, @Status, @Notes)";
+                INSERT INTO BatchSchedule (OrderID, BigCommerceID, FinishedGoodID, Quantity, ScheduledDate, Status, Notes)
+                VALUES (@OrderID, @BigCommerceID, @FinishedGoodID, @Quantity, @ScheduledDate, @Status, @Notes)";
 
                 _dbConnection.Execute(query, schedule);
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StiReport Created="2025-09-09T20:08:12.364010" EngineVersion="EngineV2" ScriptLanguage="CSharp">
+  <Dictionary>
+    <DataSources>
+      <StiDataTableSource Name="ReportData" Alias="ReportData">
+        <StiDataColumn Name="CoffeeName" />
+<StiDataColumn Name="Origin" />
+<StiDataColumn Name="Variety" />
+<StiDataColumn Name="ProcessType" />
+<StiDataColumn Name="Quantity" />
+<StiDataColumn Name="StockLevel" />
+<StiDataColumn Name="SupplierName" />
+<StiDataColumn Name="DateReceived" />
+<StiDataColumn Name="Price" />
+
+      </StiDataTableSource>
+    </DataSources>
+  </Dictionary>
+  <Pages>
+    <StiPage Name="Page1" Title="Green Coffee Inventory" PaperSize="A4">
+      <Components>
+        <StiHeaderBand Name="HeaderBand" Height="20">
+          <StiText Name="Header0" Width="100" Height="20" Text="CoffeeName" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header1" Width="100" Height="20" Text="Origin" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header2" Width="100" Height="20" Text="Variety" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header3" Width="100" Height="20" Text="ProcessType" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header4" Width="100" Height="20" Text="Quantity" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header5" Width="100" Height="20" Text="StockLevel" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header6" Width="100" Height="20" Text="SupplierName" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header7" Width="100" Height="20" Text="DateReceived" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+<StiText Name="Header8" Width="100" Height="20" Text="Price" HorAlignment="Center" Font="Arial,10pt,Bold" Border="1" />
+
+        </StiHeaderBand>
+        <StiDataBand Name="DataBand1" DataSourceName="ReportData" Height="20">
+          
+        <StiText Name="DataText0" Width="100" Height="20" Text="{{ReportData.CoffeeName}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText1" Width="100" Height="20" Text="{{ReportData.Origin}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText2" Width="100" Height="20" Text="{{ReportData.Variety}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText3" Width="100" Height="20" Text="{{ReportData.ProcessType}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText4" Width="100" Height="20" Text="{{ReportData.Quantity}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText5" Width="100" Height="20" Text="{{ReportData.StockLevel}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText6" Width="100" Height="20" Text="{{ReportData.SupplierName}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText7" Width="100" Height="20" Text="{{ReportData.DateReceived}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        <StiText Name="DataText8" Width="100" Height="20" Text="{{ReportData.Price}}" 
+                 HorAlignment="Center" VertAlignment="Center" Border="1" />
+
+        
+        </StiDataBand>
+        <StiFooterBand Name="FooterBand1" Height="40">
+          
+        <StiText Name="TotalLabel" Top="5" Width="200" Height="20" Text="Total StockLevel:" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        <StiText Name="TotalValue" Left="200" Top="5" Width="100" Height="20" Text="{{Sum(ReportData.StockLevel)}}" HorAlignment="Right" Font="Arial,10pt,Bold" />
+        
+        </StiFooterBand>
+      </Components>
+    </StiPage>
+  </Pages>
+</StiReport>
