@@ -20,6 +20,7 @@ namespace CbcRoastersErp.ViewModels
 
         public event Action<string> OnNavigationRequested;
         public event Action OnCloseRequested;
+        public event Action<object> OnOpenAddEditView;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Role> Roles { get; set; } = new();

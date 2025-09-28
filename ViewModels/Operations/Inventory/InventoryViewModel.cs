@@ -2,11 +2,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using CbcRoastersErp.Models;
-using CbcRoastersErp.Repositories;
 using CbcRoastersErp.Helpers;
-using CbcRoastersErp.Services;
+using CbcRoastersErp.Models;
 using CbcRoastersErp.Models.Operations.Inventory;
+using CbcRoastersErp.Repositories;
+using CbcRoastersErp.Services;
+using CbcRoastersErp.ViewModels.Inventory;
+using CbcRoastersErp.Views.Operations.Inventory;
 
 namespace CbcRoastersErp.ViewModels
 {
@@ -25,6 +27,14 @@ namespace CbcRoastersErp.ViewModels
         public FinishedGoods SelectedFinishedGood { get; set; }
         public ObservableCollection<BatchRoasting> ProductionBatches { get; set; }
         public ObservableCollection<FinishedGoodInventory> FinishedGoodInventory { get; set; }
+        private ObservableCollection<string> _lowInventoryAlerts;
+        public ObservableCollection<string> LowInventoryAlerts
+        {
+            get => _lowInventoryAlerts;
+            set { _lowInventoryAlerts = value; OnPropertyChanged(nameof(LowInventoryAlerts)); }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action<string> OnNavigationRequested;
@@ -53,6 +63,7 @@ namespace CbcRoastersErp.ViewModels
 
      //   public ICommand OpenAddEditFinishedGoodsCommand { get; }
         public ICommand DeleteFinishedGoodsCommand { get; }
+        public ICommand StockTakeCommand { get; }
 
         public ICommand NavigateBackCommand { get; }
 
@@ -61,8 +72,11 @@ namespace CbcRoastersErp.ViewModels
             _inventoryRepository = new InventoryRepository();
             LoadInventory();
 
-            // Green Coffee Commands
-            OpenAddEditGreenCoffeeCommand = new RelayCommand(OpenAddEditGreenCoffee);
+            // Low Inventory
+            LowInventoryAlerts = new ObservableCollection<string>(_inventoryRepository.GetLowInventoryAlerts());
+
+        // Green Coffee Commands
+        OpenAddEditGreenCoffeeCommand = new RelayCommand(OpenAddEditGreenCoffee);
             DeleteGreenCoffeeCommand = new RelayCommand(DeleteGreenCoffee, CanExecuteGreenCoffeeCommand);
 
             // Tea Commands
@@ -73,11 +87,15 @@ namespace CbcRoastersErp.ViewModels
             OpenAddEditPackingCommand = new RelayCommand(OpenAddEditPacking);
             DeletePackingCommand = new RelayCommand(DeletePacking, CanExecutePackingCommand);
 
+            // Stocktake
+            StockTakeCommand = new RelayCommand(PerformStockTake, _ => SelectedGreenCoffee != null || SelectedTea != null || SelectedPackingMaterial != null || SelectedFinishedGood != null);
+
             // Finished Goods Commands
-         //   OpenAddEditFinishedGoodsCommand = new RelayCommand(OpenAddEditFinishedGoods);
-         //   DeleteFinishedGoodsCommand = new RelayCommand(DeleteFinishedGoods, CanExecuteFinishedGoodsCommand);
+            //   OpenAddEditFinishedGoodsCommand = new RelayCommand(OpenAddEditFinishedGoods);
+            //   DeleteFinishedGoodsCommand = new RelayCommand(DeleteFinishedGoods, CanExecuteFinishedGoodsCommand);
 
             NavigateBackCommand = new RelayCommand(_ => OnNavigationRequested?.Invoke("Dashboard"));
+
         }
 
         private void LoadInventory()
@@ -102,6 +120,71 @@ namespace CbcRoastersErp.ViewModels
             OnPropertyChanged(nameof(PackingStock));
             OnPropertyChanged(nameof(FinishedGoodsStock));
         }
+
+        private void PerformStockTake(object parameter)
+        {
+            string itemType = null;
+            string itemName = null;
+            int itemId = 0;
+            int recordedQty = 0;
+
+            // Detect which item is selected
+            if (SelectedGreenCoffee != null)
+            {
+                itemType = "GreenCoffee";
+                itemId = SelectedGreenCoffee.GreenCoffeeID;
+                itemName = SelectedGreenCoffee.CoffeeName;
+                recordedQty = SelectedGreenCoffee.StockLevel;
+            }
+            else if (SelectedTea != null)
+            {
+                itemType = "Tea";
+                itemId = SelectedTea.TeaID;
+                itemName = SelectedTea.TeaName;
+                recordedQty = SelectedTea.StockLevel;
+            }
+            else if (SelectedPackingMaterial != null)
+            {
+                itemType = "PackingMaterial";
+                itemId = SelectedPackingMaterial.MaterialID;
+                itemName = SelectedPackingMaterial.MaterialName;
+                recordedQty = SelectedPackingMaterial.StockLevel;
+            }
+            else if (SelectedFinishedGood != null)
+            {
+                itemType = "FinishedGood";
+                itemId = SelectedFinishedGood.FinishedGoodID;
+                itemName = SelectedFinishedGood.ProductName;
+                recordedQty = SelectedFinishedGood.StockLevel;
+            }
+
+            if (itemType == null) return; // nothing selected
+
+            // Create the stock take ViewModel
+            var vm = new StockTakeViewModel
+            {
+                ItemId = itemId,
+                ItemType = itemType,
+                ItemName = itemName,
+                RecordedQuantity = recordedQty,
+                CountedQuantity = recordedQty
+            };
+
+            // When save is clicked
+            vm.OnSaveRequested += (type, id, counted) =>
+            {
+                _inventoryRepository.RecordStockTake(type, id, counted, recordedQty, Environment.UserName);
+                LoadInventory();
+            };
+
+            // When cancel/close
+            vm.OnCloseRequested += () => OnNavigationRequested?.Invoke("Inventory");
+
+            // Trigger navigation (same as Add/Edit screens)
+            OnOpenAddEditView?.Invoke(vm);
+        }
+
+
 
         // Green Coffee CRUD Methods
         private void OpenAddEditGreenCoffee(object parameter)

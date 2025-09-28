@@ -49,6 +49,9 @@ namespace CbcRoastersErp.ViewModels
         public ICommand DeleteBatchCommand { get; }
         public ICommand NavigateBackCommand { get; }
         public ICommand OpenAddEditBatchCommand { get; }
+        public ICommand StartRoastCommand { get; }
+        public ICommand CompleteRoastCommand { get; }
+
 
         // Pagination
         public ICommand PageChangedCommand => new RelayCommand(param =>
@@ -73,6 +76,9 @@ namespace CbcRoastersErp.ViewModels
             OpenAddEditBatchCommand = new RelayCommand(OpenAddEditBatch);
             DeleteBatchCommand = new RelayCommand(DeleteBatch, CanExecuteBatchCommand);
             NavigateBackCommand = new RelayCommand(_ => OnNavigationRequested?.Invoke("Dashboard"));
+
+            StartRoastCommand = new RelayCommand(_ => StartRoast(), _ => SelectedBatch != null);
+            CompleteRoastCommand = new RelayCommand(_ => CompleteRoast(), _ => SelectedBatch != null);
         }
 
         private void LoadRoastBatches()
@@ -134,6 +140,43 @@ namespace CbcRoastersErp.ViewModels
             _productionRepository.DeleteRoastBatch(SelectedBatch.BatchID);
             LoadRoastBatches();
         }
+
+        private void StartRoast()
+        {
+            if (SelectedBatch == null) return;
+
+            try
+            {
+                _productionRepository.UpdateRoastBatchStatus(SelectedBatch.BatchID, "In Progress");
+
+                string artisanPath = AppConfig.GetArtisanPath();
+                if (string.IsNullOrEmpty(artisanPath) || !System.IO.File.Exists(artisanPath))
+                {
+                    MessageBox.Show("Artisan executable path is not set or invalid. Please configure it in Settings.",
+                        "Missing Path", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                System.Diagnostics.Process.Start(artisanPath);
+
+                MessageBox.Show("Artisan launched and batch marked In Progress.", "Roast Started");
+                LoadRoastBatches();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start roast: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CompleteRoast()
+        {
+            if (SelectedBatch == null) return;
+
+            _productionRepository.UpdateRoastBatchStatus(SelectedBatch.BatchID, "Completed");
+            MessageBox.Show("Batch marked as completed.");
+            LoadRoastBatches();
+        }
+
 
         private bool CanExecuteBatchCommand(object parameter)
         {

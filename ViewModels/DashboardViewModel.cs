@@ -19,6 +19,10 @@ namespace CbcRoastersErp.ViewModels
         public ICommand NavigateToFarmersMarketCommand { get; set; }
         public ICommand NavigateToArtisanCommand { get; set; }
         public ICommand NavigateToEmployeesCommand { get; set; }
+
+        // Reporting
+        public ICommand NavigateToInventoryReportCommand { get; set; } // Inventory Reporting
+
         // Administration
         public ICommand NavigateToMasterDataCommand { get; set; } // Master Data Dashboard
         public ICommand NavigateToSuppliersCommand { get; set; } // Suppliers Command

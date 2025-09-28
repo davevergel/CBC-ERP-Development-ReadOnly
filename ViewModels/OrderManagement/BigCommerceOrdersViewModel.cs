@@ -7,7 +7,7 @@ using CbcRoastersErp.Models;
 using CbcRoastersErp.Repositories;
 using CbcRoastersErp.Services;
 
-namespace CbcRoastersErp.ViewModels
+namespace CbcRoastersErp.ViewModels.OrderManagement
 {
     public class BigCommerceOrdersViewModel : INotifyPropertyChanged
     {

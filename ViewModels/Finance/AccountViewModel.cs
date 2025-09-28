@@ -4,10 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CbcRoastersErp.Models.Finance;
 using CbcRoastersErp.Repositories.Finance;
-using CbcRoastersErp.Helpers;
 using CbcRoastersErp.Services;
-using CbcRoastersErp.Views.Finance;
-using CbcRoastersErp.Views;
 
 namespace CbcRoastersErp.ViewModels.Finance
 {

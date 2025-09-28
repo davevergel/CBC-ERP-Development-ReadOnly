@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using CbcRoastersErp.Repositories.Finance;
 using CbcRoastersErp.Services.Finance;
 
-namespace CbcRoastersErp.ViewModels
+namespace CbcRoastersErp.ViewModels.OrderManagement
 {
     public class OrderStatus
     {
@@ -143,12 +143,14 @@ namespace CbcRoastersErp.ViewModels
                         foreach (var product in orderProducts)
                         {
                             var finishedGood = _repository.GetFinishedGoodByBigCommProdId(product.ProductId);
+                            int lclBigCommerceId = order.BigCommerceID;
                             int localOrderId = (int)_repository.GetLocalOrderIdByBigCommerceId(order.BigCommerceID);
                             if (finishedGood != null && localOrderId != null)
                             {
                                 var schedule = new BatchSchedule
                                 {
                                     OrderID = order.BigCommerceID, //localOrderId,
+                                    BigCommerceID = lclBigCommerceId,
                                     FinishedGoodID = finishedGood.FinishedGoodID,
                                     Quantity = product.Quantity,
                                     ScheduledDate = DateTime.Now.AddDays(1),
@@ -352,8 +354,7 @@ namespace CbcRoastersErp.ViewModels
             }
         }
 
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
